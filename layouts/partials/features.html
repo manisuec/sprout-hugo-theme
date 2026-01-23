@@ -1,0 +1,28 @@
+<section id="features" class="py-24 bg-white relative">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center max-w-3xl mx-auto mb-20">
+      <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-6">
+        {{ .Params.features.headline }}
+      </h2>
+      <p class="text-lg text-slate-600">
+        {{ .Params.features.subheadline }}
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {{ range .Params.features.items }}
+        <div class="group p-8 rounded-3xl bg-slate-50 border border-slate-100 hover:bg-white hover:border-primary-100 hover:shadow-xl hover:shadow-primary-900/5 transition-all duration-300">
+          <div class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center mb-6 shadow-sm group-hover:bg-primary-500 group-hover:text-white transition-colors duration-300 text-primary-600">
+            {{ partial (printf "icons/%s.html" .icon) }}
+          </div>
+          <h3 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-primary-700 transition-colors">
+            {{ .title }}
+          </h3>
+          <p class="text-slate-600 leading-relaxed">
+            {{ .description }}
+          </p>
+        </div>
+      {{ end }}
+    </div>
+  </div>
+</section>

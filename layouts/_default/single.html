@@ -1,0 +1,142 @@
+{{ define "main" }}
+<article class="pt-24 pb-16">
+  <!-- Hero Section -->
+  <header class="bg-gradient-to-b from-slate-50 to-white pb-12">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Category & Read Time -->
+      <div class="flex items-center gap-4 mb-6">
+        {{ with .Params.category }}
+          <span class="text-sm font-semibold text-primary-600 bg-primary-50 px-4 py-1.5 rounded-full">
+            {{ . }}
+          </span>
+        {{ end }}
+        <span class="text-sm text-slate-400">{{ .ReadingTime }} min read</span>
+      </div>
+
+      <!-- Title -->
+      <h1 class="text-3xl md:text-5xl font-extrabold text-slate-900 leading-tight mb-6">
+        {{ .Title }}
+      </h1>
+
+      <!-- Description -->
+      {{ with .Params.description }}
+        <p class="text-xl text-slate-600 leading-relaxed mb-8 max-w-3xl">
+          {{ . }}
+        </p>
+      {{ end }}
+
+      <!-- Author & Date -->
+      <div class="flex items-center gap-4">
+        {{ with .Params.author }}
+          <div class="flex items-center gap-3">
+            {{ with .avatar }}
+              <img src="{{ . }}" alt="{{ $.Params.author.name }}" class="w-12 h-12 rounded-full object-cover border-2 border-white shadow-sm" />
+            {{ else }}
+              <div class="w-12 h-12 rounded-full bg-primary-100 flex items-center justify-center text-primary-600 font-bold text-lg">
+                {{ substr .name 0 1 }}
+              </div>
+            {{ end }}
+            <div>
+              <p class="font-semibold text-slate-900">{{ .name }}</p>
+              {{ with .role }}
+                <p class="text-sm text-slate-500">{{ . }}</p>
+              {{ end }}
+            </div>
+          </div>
+        {{ end }}
+        <span class="text-slate-300">|</span>
+        <time datetime="{{ .Date.Format "2006-01-02" }}" class="text-sm text-slate-500">
+          {{ .Date.Format "January 2, 2006" }}
+        </time>
+      </div>
+    </div>
+  </header>
+
+  <!-- Featured Image -->
+  {{ with .Params.image }}
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 -mt-4 mb-12">
+      <div class="rounded-3xl overflow-hidden shadow-2xl shadow-slate-900/10">
+        <img
+          src="{{ . }}"
+          alt="{{ $.Title }}"
+          class="w-full h-[400px] md:h-[500px] object-cover"
+        />
+      </div>
+    </div>
+  {{ end }}
+
+  <!-- Content -->
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="prose prose-lg prose-slate max-w-none
+      prose-headings:font-bold prose-headings:text-slate-900
+      prose-h2:text-2xl prose-h2:mt-12 prose-h2:mb-4
+      prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3
+      prose-p:text-slate-600 prose-p:leading-relaxed
+      prose-a:text-primary-600 prose-a:no-underline hover:prose-a:underline
+      prose-strong:text-slate-900
+      prose-ul:text-slate-600 prose-ol:text-slate-600
+      prose-li:marker:text-primary-500
+      prose-blockquote:border-l-primary-500 prose-blockquote:bg-slate-50 prose-blockquote:py-1 prose-blockquote:px-6 prose-blockquote:rounded-r-lg prose-blockquote:not-italic
+      prose-code:bg-slate-100 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-code:before:content-none prose-code:after:content-none
+      prose-pre:bg-slate-900 prose-pre:rounded-2xl
+      prose-img:rounded-2xl prose-img:shadow-lg">
+      {{ .Content }}
+    </div>
+
+    <!-- Tags -->
+    {{ with .Params.tags }}
+      <div class="mt-12 pt-8 border-t border-slate-200">
+        <div class="flex flex-wrap gap-2">
+          {{ range . }}
+            <span class="px-4 py-2 bg-slate-100 text-slate-600 text-sm font-medium rounded-full hover:bg-slate-200 transition-colors">
+              #{{ . }}
+            </span>
+          {{ end }}
+        </div>
+      </div>
+    {{ end }}
+
+    <!-- Share Section -->
+    <div class="mt-12 pt-8 border-t border-slate-200">
+      <div class="flex items-center justify-between">
+        <p class="font-semibold text-slate-900">Share this article</p>
+        <div class="flex items-center gap-3">
+          <a href="https://twitter.com/intent/tweet?url={{ .Permalink }}&text={{ .Title }}" target="_blank" rel="noopener" class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 hover:bg-primary-100 hover:text-primary-600 transition-colors">
+            {{ partial "icons/twitter.html" }}
+          </a>
+          <a href="https://www.facebook.com/sharer/sharer.php?u={{ .Permalink }}" target="_blank" rel="noopener" class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 hover:bg-primary-100 hover:text-primary-600 transition-colors">
+            {{ partial "icons/facebook.html" }}
+          </a>
+          <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ .Permalink }}&title={{ .Title }}" target="_blank" rel="noopener" class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 hover:bg-primary-100 hover:text-primary-600 transition-colors">
+            {{ partial "icons/linkedin.html" }}
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author Bio -->
+    {{ with .Params.author }}
+      <div class="mt-12 p-8 bg-slate-50 rounded-3xl">
+        <div class="flex items-start gap-6">
+          {{ with .avatar }}
+            <img src="{{ . }}" alt="{{ $.Params.author.name }}" class="w-20 h-20 rounded-2xl object-cover shadow-sm" />
+          {{ else }}
+            <div class="w-20 h-20 rounded-2xl bg-primary-100 flex items-center justify-center text-primary-600 font-bold text-2xl">
+              {{ substr .name 0 1 }}
+            </div>
+          {{ end }}
+          <div class="flex-1">
+            <p class="font-bold text-lg text-slate-900 mb-1">{{ .name }}</p>
+            {{ with .role }}
+              <p class="text-sm text-primary-600 font-medium mb-3">{{ . }}</p>
+            {{ end }}
+            {{ with .bio }}
+              <p class="text-slate-600 leading-relaxed">{{ . }}</p>
+            {{ end }}
+          </div>
+        </div>
+      </div>
+    {{ end }}
+  </div>
+</article>
+{{ end }}

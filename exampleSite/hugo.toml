@@ -1,0 +1,28 @@
+baseURL = "https://example.com"
+languageCode = "en-us"
+title = "Parenting Quotient"
+theme = "sprout-hugo-theme"
+
+[params]
+  description = "Empowering parents with knowledge, tools, and a supportive community to raise the next generation of changemakers."
+
+  [params.contact]
+    email = "hello@parentingquotient.com"
+    address = "123 Family Lane, Parentville"
+
+  [params.socials]
+    facebook = "#"
+    twitter = "#"
+    instagram = "#"
+    linkedin = "#"
+
+[menu]
+  [[menu.main]]
+    name = "About"
+    url = "#about"
+    weight = 1
+
+  [[menu.main]]
+    name = "Blog"
+    url = "/blog/"
+    weight = 2

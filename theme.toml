@@ -1,0 +1,13 @@
+# Theme metadata
+name = "Sprout"
+license = "MIT"
+licenselink = "https://github.com/yourusername/sprout-hugo-theme/blob/main/LICENSE"
+description = "A modern, clean Hugo theme for parenting blogs and family websites. Built with Tailwind CSS and Alpine.js."
+homepage = "https://github.com/yourusername/sprout-hugo-theme"
+tags = ["blog", "responsive", "tailwind", "modern", "clean", "parenting", "family"]
+features = ["blog", "responsive", "tailwind-css", "alpine-js", "seo", "rss"]
+min_version = "0.112.0"
+
+[author]
+  name = "Your Name"
+  homepage = "https://github.com/yourusername"

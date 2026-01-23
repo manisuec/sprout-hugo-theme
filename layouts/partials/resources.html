@@ -1,0 +1,66 @@
+<section id="resources" class="py-24 bg-slate-50 relative">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-end mb-12">
+      <div>
+        <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">{{ .Params.resources.headline }}</h2>
+        <p class="text-lg text-slate-600 max-w-xl">{{ .Params.resources.subheadline }}</p>
+      </div>
+      <a href="/blog/" class="hidden md:flex items-center text-primary-600 font-semibold hover:text-primary-700 transition-colors">
+        {{ .Params.resources.ctaText }}
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-1 w-4 h-4"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg>
+      </a>
+    </div>
+
+    {{ $blogPosts := where site.RegularPages "Section" "blog" }}
+    {{ $latestPosts := first 4 $blogPosts }}
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+      {{ range $latestPosts }}
+        <a href="{{ .Permalink }}" class="group">
+          <article class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 h-full">
+            <div class="aspect-[4/3] overflow-hidden">
+              {{ with .Params.image }}
+                <img
+                  src="{{ . }}"
+                  alt="{{ $.Title }}"
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+              {{ else }}
+                <div class="w-full h-full bg-gradient-to-br from-primary-100 to-primary-200 flex items-center justify-center">
+                  <svg class="w-12 h-12 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+                  </svg>
+                </div>
+              {{ end }}
+            </div>
+            <div class="p-6">
+              <div class="flex items-center gap-3 mb-3">
+                {{ with .Params.category }}
+                  <span class="text-xs font-semibold text-primary-600 bg-primary-50 px-3 py-1 rounded-full">
+                    {{ . }}
+                  </span>
+                {{ end }}
+                <span class="text-xs text-slate-400">{{ .ReadingTime }} min read</span>
+              </div>
+              <h3 class="text-lg font-bold text-slate-900 mb-2 group-hover:text-primary-700 transition-colors line-clamp-2">
+                {{ .Title }}
+              </h3>
+              {{ with .Params.description }}
+                <p class="text-sm text-slate-600 line-clamp-2">
+                  {{ . }}
+                </p>
+              {{ end }}
+            </div>
+          </article>
+        </a>
+      {{ end }}
+    </div>
+
+    <!-- Mobile CTA (hidden on desktop since link is in header) -->
+    <div class="text-center md:hidden">
+      <a href="/blog/" class="inline-flex items-center justify-center rounded-full font-semibold transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 bg-primary-600 text-white hover:bg-primary-700 shadow-lg shadow-primary-600/20 hover:shadow-primary-600/40 focus:ring-primary-500 px-8 py-4 text-lg">
+        {{ .Params.resources.ctaText }}
+      </a>
+    </div>
+  </div>
+</section>

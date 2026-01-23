@@ -1,0 +1,18 @@
+<section class="py-20 relative overflow-hidden">
+  <div class="absolute inset-0 bg-primary-900"></div>
+  <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+  <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-primary-500/20 rounded-full blur-3xl translate-x-1/2 -translate-y-1/2"></div>
+  
+  <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+    <h2 class="text-3xl md:text-5xl font-bold text-white mb-6">
+      {{ .Params.cta.headline }}
+    </h2>
+    <p class="text-lg text-primary-100 mb-10 max-w-2xl mx-auto">
+      {{ .Params.cta.subheadline }}
+    </p>
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      {{ partial "button.html" (dict "variant" "secondary" "size" "lg" "text" .Params.cta.primaryCta "class" "text-primary-900") }}
+      {{ partial "button.html" (dict "variant" "outline" "size" "lg" "text" .Params.cta.secondaryCta "class" "border-white text-white hover:bg-white/10 hover:border-white") }}
+    </div>
+  </div>
+</section>

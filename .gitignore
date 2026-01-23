@@ -1,0 +1,22 @@
+# Hugo generated files
+public/
+resources/_gen/
+.hugo_build.lock
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Node (if using npm for build tools)
+node_modules/
+package-lock.json
+
+# Example site build output
+exampleSite/public/
+exampleSite/resources/
