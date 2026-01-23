@@ -1,0 +1,98 @@
+{{ define "main" }}
+<section class="py-16 bg-gradient-to-br from-primary-50 via-white to-accent-50">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Page Header -->
+    <div class="text-center mb-10">
+      {{ with .Params.badge }}
+        <span class="inline-block px-4 py-2 bg-primary-100 text-primary-700 rounded-full text-sm font-semibold mb-6">
+          {{ . }}
+        </span>
+      {{ end }}
+      <h1 class="text-4xl md:text-5xl font-bold text-slate-900 mb-6">
+        {{ .Title }}
+      </h1>
+      {{ with .Params.subtitle }}
+        <p class="text-xl text-slate-600 max-w-2xl mx-auto">
+          {{ . }}
+        </p>
+      {{ end }}
+    </div>
+
+    <!-- Featured Image -->
+    {{ with .Params.image }}
+      <div class="mb-10 rounded-2xl overflow-hidden shadow-xl">
+        <img src="{{ . }}" alt="{{ $.Title }}" class="w-full h-64 md:h-96 object-cover" />
+      </div>
+    {{ end }}
+
+    <!-- Main Content -->
+    <div class="prose prose-lg prose-slate max-w-none mb-10
+      prose-headings:font-bold prose-headings:text-slate-900
+      prose-h2:text-2xl prose-h2:mt-12 prose-h2:mb-4
+      prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3
+      prose-p:text-slate-600 prose-p:leading-relaxed
+      prose-a:text-primary-600 prose-a:no-underline hover:prose-a:underline
+      prose-strong:text-slate-900
+      prose-ul:text-slate-600 prose-ol:text-slate-600
+      prose-blockquote:border-primary-500 prose-blockquote:bg-primary-50 prose-blockquote:py-1 prose-blockquote:px-6 prose-blockquote:rounded-r-lg prose-blockquote:not-italic
+      prose-img:rounded-xl prose-img:shadow-lg">
+      {{ .Content }}
+    </div>
+
+    <!-- Team Section -->
+    {{ with .Params.team }}
+      <div class="mt-12">
+        <h2 class="text-3xl font-bold text-slate-900 text-center mb-8">{{ .headline }}</h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {{ range .members }}
+            {{ $member := . }}
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 text-center hover:shadow-lg transition-shadow">
+              {{ with .avatar }}
+                <img src="{{ . }}" alt="{{ $member.name }}" class="w-24 h-24 rounded-full mx-auto mb-4 object-cover" />
+              {{ else }}
+                <div class="w-24 h-24 rounded-full mx-auto mb-4 bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center">
+                  <span class="text-2xl font-bold text-white">{{ substr $member.name 0 1 }}</span>
+                </div>
+              {{ end }}
+              <h3 class="text-lg font-bold text-slate-900 mb-1">{{ .name }}</h3>
+              <p class="text-sm text-primary-600 font-medium mb-3">{{ .role }}</p>
+              {{ with .bio }}
+                <p class="text-sm text-slate-600">{{ . }}</p>
+              {{ end }}
+            </div>
+          {{ end }}
+        </div>
+      </div>
+    {{ end }}
+
+    <!-- Values Section -->
+    {{ with .Params.values }}
+      <div class="mt-12">
+        <h2 class="text-3xl font-bold text-slate-900 text-center mb-8">{{ .headline }}</h2>
+        <div class="grid md:grid-cols-2 gap-6">
+          {{ range .items }}
+            <div class="bg-white rounded-2xl p-8 shadow-sm border border-slate-100 hover:shadow-lg transition-shadow">
+              <div class="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center mb-4">
+                {{ partial (printf "icons/%s.html" .icon) }}
+              </div>
+              <h3 class="text-xl font-bold text-slate-900 mb-2">{{ .title }}</h3>
+              <p class="text-slate-600">{{ .description }}</p>
+            </div>
+          {{ end }}
+        </div>
+      </div>
+    {{ end }}
+
+    <!-- CTA Section -->
+    {{ with .Params.cta }}
+      <div class="mt-12 bg-gradient-to-r from-primary-600 to-primary-700 rounded-3xl p-8 md:p-12 text-center">
+        <h2 class="text-2xl md:text-3xl font-bold text-white mb-4">{{ .headline }}</h2>
+        <p class="text-primary-100 mb-8 max-w-xl mx-auto">{{ .description }}</p>
+        <a href="{{ .buttonLink }}" class="inline-flex items-center justify-center px-8 py-4 bg-white text-primary-700 font-semibold rounded-full hover:bg-primary-50 transition-colors shadow-lg">
+          {{ .buttonText }}
+        </a>
+      </div>
+    {{ end }}
+  </div>
+</section>
+{{ end }}

@@ -1,7 +1,7 @@
 {{ define "main" }}
-<article class="pt-24 pb-16">
+<article class="pt-20 pb-12">
   <!-- Hero Section -->
-  <header class="bg-gradient-to-b from-slate-50 to-white pb-12">
+  <header class="bg-gradient-to-b from-slate-50 to-white pb-8">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
       <!-- Category & Read Time -->
       <div class="flex items-center gap-4 mb-6">
@@ -54,7 +54,7 @@
 
   <!-- Featured Image -->
   {{ with .Params.image }}
-    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 -mt-4 mb-12">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 -mt-4 mb-8">
       <div class="rounded-3xl overflow-hidden shadow-2xl shadow-slate-900/10">
         <img
           src="{{ . }}"
@@ -85,7 +85,7 @@
 
     <!-- Tags -->
     {{ with .Params.tags }}
-      <div class="mt-12 pt-8 border-t border-slate-200">
+      <div class="mt-8 pt-6 border-t border-slate-200">
         <div class="flex flex-wrap gap-2">
           {{ range . }}
             <span class="px-4 py-2 bg-slate-100 text-slate-600 text-sm font-medium rounded-full hover:bg-slate-200 transition-colors">
@@ -97,7 +97,7 @@
     {{ end }}
 
     <!-- Share Section -->
-    <div class="mt-12 pt-8 border-t border-slate-200">
+    <div class="mt-8 pt-6 border-t border-slate-200">
       <div class="flex items-center justify-between">
         <p class="font-semibold text-slate-900">Share this article</p>
         <div class="flex items-center gap-3">
@@ -116,7 +116,7 @@
 
     <!-- Author Bio -->
     {{ with .Params.author }}
-      <div class="mt-12 p-8 bg-slate-50 rounded-3xl">
+      <div class="mt-8 p-6 bg-slate-50 rounded-3xl">
         <div class="flex items-start gap-6">
           {{ with .avatar }}
             <img src="{{ . }}" alt="{{ $.Params.author.name }}" class="w-20 h-20 rounded-2xl object-cover shadow-sm" />

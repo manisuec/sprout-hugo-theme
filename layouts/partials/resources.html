@@ -1,20 +1,20 @@
-<section id="resources" class="py-24 bg-slate-50 relative">
+<section id="resources" class="py-16 bg-slate-50 relative">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex justify-between items-end mb-12">
+    <div class="flex justify-between items-end mb-8">
       <div>
         <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">{{ .Params.resources.headline }}</h2>
         <p class="text-lg text-slate-600 max-w-xl">{{ .Params.resources.subheadline }}</p>
       </div>
-      <a href="/blog/" class="hidden md:flex items-center text-primary-600 font-semibold hover:text-primary-700 transition-colors">
+      <a href="/posts/" class="hidden md:flex items-center text-primary-600 font-semibold hover:text-primary-700 transition-colors">
         {{ .Params.resources.ctaText }}
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-1 w-4 h-4"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg>
       </a>
     </div>
 
-    {{ $blogPosts := where site.RegularPages "Section" "blog" }}
+    {{ $blogPosts := where site.RegularPages "Section" "posts" }}
     {{ $latestPosts := first 4 $blogPosts }}
 
-    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
       {{ range $latestPosts }}
         <a href="{{ .Permalink }}" class="group">
           <article class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 h-full">
@@ -58,7 +58,7 @@
 
     <!-- Mobile CTA (hidden on desktop since link is in header) -->
     <div class="text-center md:hidden">
-      <a href="/blog/" class="inline-flex items-center justify-center rounded-full font-semibold transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 bg-primary-600 text-white hover:bg-primary-700 shadow-lg shadow-primary-600/20 hover:shadow-primary-600/40 focus:ring-primary-500 px-8 py-4 text-lg">
+      <a href="/posts/" class="inline-flex items-center justify-center rounded-full font-semibold transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 bg-primary-600 text-white hover:bg-primary-700 shadow-lg shadow-primary-600/20 hover:shadow-primary-600/40 focus:ring-primary-500 px-8 py-4 text-lg">
         {{ .Params.resources.ctaText }}
       </a>
     </div>

@@ -81,8 +81,8 @@ theme = "sprout-hugo-theme"
     weight = 1
 
   [[menu.main]]
-    name = "Blog"
-    url = "/blog/"
+    name = "Posts"
+    url = "/posts/"
     weight = 2
 ```
 
@@ -137,7 +137,7 @@ cta:
 ---
 ```
 
-### Blog Posts (`content/blog/`)
+### Blog Posts (`content/posts/`)
 
 ```yaml
 ---
