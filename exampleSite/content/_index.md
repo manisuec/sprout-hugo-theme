@@ -53,13 +53,12 @@ features:
       url: "/categories/child-development/"
 
 resources:
-  headline: "Latest from the Library"
-  subheadline: "Deep dives into the topics that matter most to modern families."
+  headline: "Trending from the Library"
+  subheadline: "Deep dives into the popular topics that matter most to modern families."
   ctaText: "View All Articles"
 
 cta:
   headline: "Ready to Start Your Parenting Journey?"
   subheadline: "Join our community today and get instant access to our complete library of parenting masterclasses and tools."
-  primaryCta: "Get Started By Reading..."
-  primaryCtaLink: "/posts/"
+  primaryCta: "Join our newsletter"
 ---

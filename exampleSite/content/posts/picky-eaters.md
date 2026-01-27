@@ -16,6 +16,7 @@ author:
   role: "Pediatric Nutritionist"
   avatar: "https://picsum.photos/id/177/200/200"
   bio: "Emma Rodriguez is a registered dietitian specializing in pediatric nutrition. She helps families build healthy relationships with food through practical, stress-free approaches."
+trending: false
 ---
 
 If your toddler survives on a diet of chicken nuggets and plain pasta, you're not alone. Picky eating is one of the most common challenges parents face.

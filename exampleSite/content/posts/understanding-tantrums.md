@@ -16,6 +16,7 @@ author:
   role: "Child Psychologist"
   avatar: "https://picsum.photos/id/91/200/200"
   bio: "Dr. Michael Chen is a licensed child psychologist with expertise in emotional regulation and attachment. He runs a popular parenting podcast and consults for schools nationwide."
+trending: true
 ---
 
 When your child throws themselves on the floor in the grocery store, it's easy to feel embarrassed, frustrated, or even angry. But understanding what's happening in their brain can transform how you respond.

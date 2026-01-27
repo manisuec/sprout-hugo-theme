@@ -16,6 +16,7 @@ author:
   role: "Pediatric Sleep Consultant"
   avatar: "https://picsum.photos/id/64/200/200"
   bio: "Dr. Sarah Mitchell is a board-certified pediatrician and sleep consultant with over 15 years of experience helping families establish healthy sleep habits. She's the author of 'Sleep Solutions for Modern Parents' and a mother of three."
+trending: true
 ---
 
 Sleep deprivation is one of the biggest challenges new parents face. If you're reading this at 3 AM while rocking your baby, know that you're not alone—and there is hope.
