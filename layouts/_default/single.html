@@ -5,7 +5,7 @@
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
       <!-- Category & Read Time -->
       <div class="flex items-center gap-4 mb-6">
-        {{ with .Params.category }}
+        {{ with index .Params.categories 0 }}
           <span class="text-sm font-semibold text-primary-600 bg-primary-50 px-4 py-1.5 rounded-full">
             {{ . }}
           </span>

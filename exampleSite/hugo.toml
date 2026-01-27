@@ -16,6 +16,10 @@ theme = "sprout-hugo-theme"
     instagram = "#"
     linkedin = "#"
 
+[taxonomies]
+  tag = "tags"
+  category = "categories"
+
 [menu]
   [[menu.main]]
     name = "About Us"
