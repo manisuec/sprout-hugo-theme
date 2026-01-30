@@ -19,14 +19,14 @@ A modern, clean Hugo theme designed for parenting blogs, family websites, and li
 
 ```bash
 cd your-hugo-site/themes
-git clone https://github.com/yourusername/sprout-hugo-theme.git
+git clone https://github.com/manisuec/sprout-hugo-theme.git
 ```
 
 ### Option 2: Git Submodule
 
 ```bash
 cd your-hugo-site
-git submodule add https://github.com/yourusername/sprout-hugo-theme.git themes/sprout-hugo-theme
+git submodule add https://github.com/manisuec/sprout-hugo-theme.git themes/sprout-hugo-theme
 ```
 
 ### Option 3: Hugo Module
@@ -36,7 +36,7 @@ Add to your `hugo.toml`:
 ```toml
 [module]
   [[module.imports]]
-    path = "github.com/yourusername/sprout-hugo-theme"
+    path = "github.com/manisuec/sprout-hugo-theme"
 ```
 
 Then run:
