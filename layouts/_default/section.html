@@ -1,0 +1,24 @@
+{{ define "main" }}
+<section class="pt-20 pb-12 min-h-screen">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
+    <h1 class="text-4xl font-extrabold text-slate-900 mb-8">{{ .Title }}</h1>
+    {{ .Content }}
+    {{ if .Pages }}
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {{ range .Pages }}
+          <article class="group">
+            <a href="{{ .Permalink }}" class="block bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 h-full p-6">
+              <h3 class="text-lg font-bold text-slate-900 mb-2 group-hover:text-primary-700 transition-colors">
+                {{ .Title }}
+              </h3>
+              {{ with .Params.description }}
+                <p class="text-sm text-slate-600 line-clamp-2">{{ . }}</p>
+              {{ end }}
+            </a>
+          </article>
+        {{ end }}
+      </div>
+    {{ end }}
+  </div>
+</section>
+{{ end }}
