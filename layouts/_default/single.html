@@ -53,7 +53,7 @@
   </header>
 
   <!-- Featured Image -->
-  {{ with .Params.image }}
+  {{ with .Params.titleImage }}
     <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 -mt-4 mb-8">
       <div class="rounded-3xl overflow-hidden shadow-2xl shadow-slate-900/10">
         <img
@@ -79,7 +79,7 @@
       prose-blockquote:border-l-primary-500 prose-blockquote:bg-slate-50 prose-blockquote:py-1 prose-blockquote:px-6 prose-blockquote:rounded-r-lg prose-blockquote:not-italic
       prose-code:bg-slate-100 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-code:before:content-none prose-code:after:content-none
       prose-pre:bg-slate-900 prose-pre:rounded-2xl
-      prose-img:rounded-2xl prose-img:shadow-lg">
+      prose-img:rounded-3xl prose-img:shadow-2xl prose-img:shadow-slate-900/10">
       {{ .Content }}
     </div>
 
@@ -110,7 +110,7 @@
           <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ .Permalink }}&title={{ .Title }}" target="_blank" rel="noopener" class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 hover:bg-primary-100 hover:text-primary-600 transition-colors" title="Share on LinkedIn">
             {{ partial "icons/linkedin.html" }}
           </a>
-          <a href="https://pinterest.com/pin/create/button/?url={{ .Permalink }}&description={{ .Title }}{{ with .Params.image }}&media={{ . }}{{ end }}" target="_blank" rel="noopener" class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 hover:bg-primary-100 hover:text-primary-600 transition-colors" title="Share on Pinterest">
+          <a href="https://pinterest.com/pin/create/button/?url={{ .Permalink }}&description={{ .Title }}{{ with .Params.titleImage }}&media={{ . }}{{ end }}" target="_blank" rel="noopener" class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 hover:bg-primary-100 hover:text-primary-600 transition-colors" title="Share on Pinterest">
             {{ partial "icons/pinterest.html" }}
           </a>
           <a href="https://wa.me/?text={{ .Title }}%20{{ .Permalink }}" target="_blank" rel="noopener" class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 hover:bg-primary-100 hover:text-primary-600 transition-colors" title="Share on WhatsApp">

@@ -1,0 +1,8 @@
+// Main SCSS file for custom styles
+// This file compiles all SCSS partials into a single CSS file
+
+// Import variables
+@import 'variables';
+
+// Import custom styles
+@import 'custom';

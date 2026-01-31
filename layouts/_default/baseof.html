@@ -55,6 +55,13 @@
       font-family: 'Plus Jakarta Sans', sans-serif;
     }
   </style>
+
+  <!-- Custom SCSS -->
+  {{ $scss := resources.Get "scss/main.scss" }}
+  {{ if $scss }}
+    {{ $css := $scss | toCSS | minify }}
+    <style>{{ $css.Content | safeCSS }}</style>
+  {{ end }}
 </head>
 <body class="bg-slate-50 text-slate-900 antialiased selection:bg-primary-200 selection:text-primary-900">
   {{ partial "navbar.html" . }}
