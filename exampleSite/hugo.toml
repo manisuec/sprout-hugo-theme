@@ -2,6 +2,8 @@ baseURL = "https://example.com"
 languageCode = "en-us"
 title = "Parenting Quotient"
 theme = "sprout-hugo-theme"
+[pagination]
+  pagerSize = 6
 
 [params]
   description = "Empowering parents with knowledge, tools, and a supportive community to raise the next generation of changemakers."

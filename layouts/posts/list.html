@@ -22,9 +22,11 @@
 
   <!-- Blog Grid -->
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8">
-    {{ $posts := .Pages }}
+    {{ $paginator := .Paginate .Pages 10 }}
+    {{ $posts := $paginator.Pages }}
     {{ if gt (len $posts) 0 }}
-      <!-- Featured Post (First Post) -->
+      <!-- Featured Post (First Post) - Only on first page -->
+      {{ if eq $paginator.PageNumber 1 }}
       {{ with index $posts 0 }}
         <article class="mb-8">
           <a href="{{ .Permalink }}" class="group block bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 border border-slate-100">
@@ -84,11 +86,13 @@
           </a>
         </article>
       {{ end }}
+      {{ end }}
 
       <!-- Rest of Posts Grid -->
-      {{ if gt (len $posts) 1 }}
+      {{ $gridPosts := cond (eq $paginator.PageNumber 1) (after 1 $posts) $posts }}
+      {{ if gt (len $gridPosts) 0 }}
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {{ range after 1 $posts }}
+          {{ range $gridPosts }}
             <article class="group">
               <a href="{{ .Permalink }}" class="block bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 h-full">
                 <!-- Image -->
@@ -143,6 +147,9 @@
           {{ end }}
         </div>
       {{ end }}
+
+      <!-- Pagination -->
+      {{ partial "pagination.html" . }}
     {{ else }}
       <!-- Empty State -->
       <div class="text-center py-20">

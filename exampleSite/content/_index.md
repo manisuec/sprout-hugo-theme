@@ -36,7 +36,7 @@ features:
       icon: "baby"
       url: "/categories/newborn-essentials/"
     - title: "Breastfeeding"
-      description: "Expert answers to common breastfeeding questions and practical tips on feeding journey."
+      description: "Expert answers to common questions & practical tips on feeding journey."
       icon: "heart-handshake"
       url: "/categories/breastfeeding/"
     - title: "Nutrition & Health"
