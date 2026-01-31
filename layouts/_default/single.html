@@ -6,9 +6,9 @@
       <!-- Category & Read Time -->
       <div class="flex items-center gap-4 mb-6">
         {{ with index .Params.categories 0 }}
-          <span class="text-sm font-semibold text-primary-600 bg-primary-50 px-4 py-1.5 rounded-full">
+          <a href="/categories/{{ . | urlize }}/" class="text-sm font-semibold text-primary-600 bg-primary-50 px-4 py-1.5 rounded-full hover:bg-primary-100 transition-colors">
             {{ . }}
-          </span>
+          </a>
         {{ end }}
         <span class="text-sm text-slate-400">{{ .ReadingTime }} min read</span>
       </div>
@@ -101,41 +101,62 @@
       <div class="flex items-center justify-between">
         <p class="font-semibold text-slate-900">Share this article</p>
         <div class="flex items-center gap-3">
-          <a href="https://twitter.com/intent/tweet?url={{ .Permalink }}&text={{ .Title }}" target="_blank" rel="noopener" class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 hover:bg-primary-100 hover:text-primary-600 transition-colors">
+          <a href="https://twitter.com/intent/tweet?url={{ .Permalink }}&text={{ .Title }}" target="_blank" rel="noopener" class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 hover:bg-primary-100 hover:text-primary-600 transition-colors" title="Share on X">
             {{ partial "icons/twitter.html" }}
           </a>
-          <a href="https://www.facebook.com/sharer/sharer.php?u={{ .Permalink }}" target="_blank" rel="noopener" class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 hover:bg-primary-100 hover:text-primary-600 transition-colors">
+          <a href="https://www.facebook.com/sharer/sharer.php?u={{ .Permalink }}" target="_blank" rel="noopener" class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 hover:bg-primary-100 hover:text-primary-600 transition-colors" title="Share on Facebook">
             {{ partial "icons/facebook.html" }}
           </a>
-          <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ .Permalink }}&title={{ .Title }}" target="_blank" rel="noopener" class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 hover:bg-primary-100 hover:text-primary-600 transition-colors">
+          <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ .Permalink }}&title={{ .Title }}" target="_blank" rel="noopener" class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 hover:bg-primary-100 hover:text-primary-600 transition-colors" title="Share on LinkedIn">
             {{ partial "icons/linkedin.html" }}
+          </a>
+          <a href="https://pinterest.com/pin/create/button/?url={{ .Permalink }}&description={{ .Title }}{{ with .Params.image }}&media={{ . }}{{ end }}" target="_blank" rel="noopener" class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 hover:bg-primary-100 hover:text-primary-600 transition-colors" title="Share on Pinterest">
+            {{ partial "icons/pinterest.html" }}
+          </a>
+          <a href="https://wa.me/?text={{ .Title }}%20{{ .Permalink }}" target="_blank" rel="noopener" class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 hover:bg-primary-100 hover:text-primary-600 transition-colors" title="Share on WhatsApp">
+            {{ partial "icons/whatsapp.html" }}
           </a>
         </div>
       </div>
     </div>
 
-    <!-- Author Bio -->
-    {{ with .Params.author }}
-      <div class="mt-8 p-6 bg-slate-50 rounded-3xl">
-        <div class="flex items-start gap-6">
-          {{ with .avatar }}
-            <img src="{{ . }}" alt="{{ $.Params.author.name }}" class="w-20 h-20 rounded-2xl object-cover shadow-sm" />
+    <!-- Previous/Next Navigation -->
+    {{ if or .PrevInSection .NextInSection }}
+      <nav class="mt-12 pt-8 border-t border-slate-200">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Previous Article -->
+          {{ with .PrevInSection }}
+            <a href="{{ .Permalink }}" class="group flex flex-col p-6 bg-slate-50 rounded-2xl hover:bg-primary-50 transition-colors">
+              <span class="text-sm text-slate-400 mb-2 flex items-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                </svg>
+                Previous Article
+              </span>
+              <span class="font-semibold text-slate-900 group-hover:text-primary-700 transition-colors line-clamp-2">
+                {{ .Title }}
+              </span>
+            </a>
           {{ else }}
-            <div class="w-20 h-20 rounded-2xl bg-primary-100 flex items-center justify-center text-primary-600 font-bold text-2xl">
-              {{ substr .name 0 1 }}
-            </div>
+            <div></div>
           {{ end }}
-          <div class="flex-1">
-            <p class="font-bold text-lg text-slate-900 mb-1">{{ .name }}</p>
-            {{ with .role }}
-              <p class="text-sm text-primary-600 font-medium mb-3">{{ . }}</p>
-            {{ end }}
-            {{ with .bio }}
-              <p class="text-slate-600 leading-relaxed">{{ . }}</p>
-            {{ end }}
-          </div>
+
+          <!-- Next Article -->
+          {{ with .NextInSection }}
+            <a href="{{ .Permalink }}" class="group flex flex-col p-6 bg-slate-50 rounded-2xl hover:bg-primary-50 transition-colors md:text-right">
+              <span class="text-sm text-slate-400 mb-2 flex items-center gap-2 md:justify-end">
+                Next Article
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+              </span>
+              <span class="font-semibold text-slate-900 group-hover:text-primary-700 transition-colors line-clamp-2">
+                {{ .Title }}
+              </span>
+            </a>
+          {{ end }}
         </div>
-      </div>
+      </nav>
     {{ end }}
   </div>
 </article>
