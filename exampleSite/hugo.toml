@@ -26,6 +26,15 @@ theme = "sprout-hugo-theme"
   tag = "tags"
   category = "categories"
 
+[markup]
+  [markup.tableOfContents]
+    endLevel = 3
+    ordered = false
+    startLevel = 2
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+
 [menu]
   [[menu.main]]
     name = "About Us"

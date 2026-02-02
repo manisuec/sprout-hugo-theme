@@ -11,7 +11,6 @@
       {{ .Params.cta.subheadline }}
     </p>
     <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-        {{ partial "button.html" (dict "variant" "secondary" "size" "lg" "text" .Params.cta.primaryCta "class" "text-primary-900") }}
       <form id="newsletter-form" class="flex flex-col sm:flex-row gap-2">
         <input
           id="newsletter-email"

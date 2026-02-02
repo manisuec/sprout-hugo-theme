@@ -33,13 +33,13 @@ Young children's brains are still developing. The prefrontal cortex—responsibl
 - **Frustration** when they can't do or communicate something
 - **Need for connection** or attention
 
-## The Power of Co-Regulation
+### The Power of Co-Regulation
 
 Children can't regulate their emotions alone—they need to borrow our calm. This is called co-regulation.
 
 ![post image](https://picsum.photos/id/292/1200/800)
 
-### How to Co-Regulate
+#### How to Co-Regulate
 
 1. **Stay calm yourself** (easier said than done, we know)
 2. **Get on their level** physically

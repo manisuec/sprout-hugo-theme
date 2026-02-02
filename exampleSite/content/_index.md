@@ -60,5 +60,4 @@ resources:
 cta:
   headline: "Ready to Start Your Parenting Journey?"
   subheadline: "Join our community today and get instant access to our complete library of parenting masterclasses and tools."
-  primaryCta: "Join our newsletter"
 ---
