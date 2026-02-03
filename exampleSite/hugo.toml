@@ -21,7 +21,8 @@ theme = "sprout-hugo-theme"
     facebook = "#"
     twitter = "#"
     instagram = "#"
-    linkedin = "#"
+    pinterest = "#"
+    youtube = "#"
 
 [taxonomies]
   tag = "tags"

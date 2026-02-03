@@ -6,22 +6,6 @@ badge: "Our Story"
 subtitle: "Empowering parents with knowledge, community, and confidence since 2020."
 image: "https://picsum.photos/id/1071/1200/600"
 
-team:
-  headline: "Meet Our Team"
-  members:
-    - name: "Dr. Sarah Mitchell"
-      role: "Founder & Lead Consultant"
-      avatar: "https://picsum.photos/id/64/200/200"
-      bio: "Pediatrician with 15+ years of experience helping families thrive."
-    - name: "Emma Rodriguez"
-      role: "Nutrition Expert"
-      avatar: "https://picsum.photos/id/177/200/200"
-      bio: "Registered dietitian passionate about healthy family meals."
-    - name: "Dr. Michael Chen"
-      role: "Child Psychologist"
-      avatar: "https://picsum.photos/id/91/200/200"
-      bio: "Specialist in emotional development and positive parenting."
-
 values:
   headline: "Our Values"
   items:
@@ -39,10 +23,9 @@ values:
       icon: "heart"
 
 cta:
-  headline: "Join Our Community"
-  description: "Connect with thousands of parents on the same journey. Get support, share experiences, and grow together."
-  buttonText: "Get Started Free"
-  buttonLink: "/posts/"
+  headline: "Start Your Parenting Journey"
+  description: "Subscribe to our newsletter today and get instant access to our latest articles and keep yourself updated."
+  buttonText: "Subscribe"
 ---
 
 ## Our Mission

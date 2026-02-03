@@ -5,7 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{{ .Site.Title }} - {{ .Site.Params.description }}</title>
   <meta name="description" content="{{ .Site.Params.description }}" />
-  
+
+  <!-- Open Graph & Twitter Card Meta Tags -->
+  {{ partial "opengraph.html" . }}
+
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
 
@@ -62,6 +65,9 @@
     {{ $css := $scss | toCSS | minify }}
     <style>{{ $css.Content | safeCSS }}</style>
   {{ end }}
+
+  <!-- Schema.org Structured Data -->
+  {{ partial "schema/organization.html" . }}
 </head>
 <body class="bg-slate-50 text-slate-900 antialiased selection:bg-primary-200 selection:text-primary-900">
   {{ partial "navbar.html" . }}
