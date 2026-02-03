@@ -38,6 +38,8 @@
                     src="{{ . }}"
                     alt="{{ $.Title }}"
                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    fetchpriority="high"
+                    decoding="async"
                   />
                 {{ else }}
                   <div class="w-full h-full bg-gradient-to-br from-primary-100 to-primary-200 flex items-center justify-center">
@@ -102,6 +104,8 @@
                       src="{{ . }}"
                       alt="{{ $.Title }}"
                       class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      loading="lazy"
+                      decoding="async"
                     />
                   {{ else }}
                     <div class="w-full h-full bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center">
