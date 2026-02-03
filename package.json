@@ -1,0 +1,14 @@
+{
+  "name": "sprout-hugo-theme",
+  "version": "1.0.0",
+  "description": "A modern Hugo theme for parenting blogs",
+  "scripts": {
+    "build:css": "tailwindcss -i ./assets/css/tailwind.css -o ./static/css/styles.css --minify",
+    "watch:css": "tailwindcss -i ./assets/css/tailwind.css -o ./static/css/styles.css --watch",
+    "dev": "npm run watch:css & hugo server",
+    "build": "npm run build:css && hugo --minify"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.0"
+  }
+}
