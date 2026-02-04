@@ -22,6 +22,10 @@ values:
       description: "We understand the challenges of parenting and approach everything with empathy."
       icon: "heart"
 
+connectCta:
+  headline: "Connect With Us"
+  description: "Lets connect on various channels to stay updated with the latest parenting tips & resources"
+
 cta:
   headline: "Start Your Parenting Journey"
   description: "Subscribe to our newsletter today and get instant access to our latest articles and keep yourself updated."
