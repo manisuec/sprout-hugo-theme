@@ -6,6 +6,15 @@
   <title>{{ if .IsHome }}{{ .Site.Title }} - {{ .Site.Params.description }}{{ else }}{{ .Title }} | {{ .Site.Title }}{{ end }}</title>
   <meta name="description" content="{{ with .Params.description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}" />
 
+  <!-- Favicon with multiple formats -->
+  <link rel="icon" type="image/x-icon" href="{{ "/images/favicon.ico" | absURL }}">
+  <link rel="icon" type="image/png" href="{{ "/images/favicon-32x32.png" | absURL }}" sizes="32x32">
+  <link rel="icon" type="image/png" href="{{ "/images/favicon-16x16.png" | absURL }}" sizes="16x16">
+  <link rel="apple-touch-icon" sizes="180x180" href="{{ "/images/apple-touch-icon.png" | absURL }}">
+  {{ with .Site.Params.faviconSVG }}<link rel="icon" type="image/svg+xml" href="{{ . }}">{{ end }}
+  {{ with .Site.Params.webmanifest }}<link rel="manifest" href="{{ . }}">{{ end }}
+  <meta name="theme-color" content="{{ .Site.Params.themeColor | default "#10b981" }}">
+
   <!-- Resource Hints for Performance -->
   <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
   <link rel="preconnect" href="https://fonts.googleapis.com">
