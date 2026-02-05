@@ -1,0 +1,119 @@
+{{ define "main" }}
+<section class="pt-20 pb-16 min-h-screen bg-gradient-to-b from-primary-50/30 via-white to-slate-50/50">
+  <!-- Header Section -->
+  <header class="relative overflow-hidden pb-12">
+    <!-- Decorative Background Elements -->
+    <div class="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-primary-100/40 to-transparent rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+    <div class="absolute bottom-0 left-0 w-64 h-64 bg-gradient-to-tr from-primary-100/30 to-transparent rounded-full blur-2xl translate-y-1/2 -translate-x-1/2"></div>
+
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 relative">
+      <!-- Breadcrumb -->
+      <nav class="flex items-center gap-2 text-sm text-slate-500 mb-6" aria-label="Breadcrumb">
+        <a href="/" class="hover:text-primary-600 transition-colors">Home</a>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg>
+        <span class="text-slate-700 font-medium">{{ .Title }}</span>
+      </nav>
+
+      <!-- Title & Description -->
+      <div class="text-center max-w-3xl mx-auto">
+        <div class="inline-flex items-center justify-center w-16 h-16 bg-primary-100 rounded-2xl mb-6">
+          <svg class="w-8 h-8 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+          </svg>
+        </div>
+        <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900 mb-4 tracking-tight">
+          {{ .Title }}
+        </h1>
+        <p class="text-lg text-slate-600 leading-relaxed">
+          Essential pregnancy and parenting terms explained in simple language
+        </p>
+      </div>
+    </div>
+  </header>
+
+  <!-- Glossary Content -->
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="glossary-content">
+      {{ .Content }}
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Glossary Section Headings */
+  .glossary-content h3 {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-top: 3rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid #e2e8f0;
+  }
+
+  .glossary-content h3::before {
+    content: '';
+    display: inline-block;
+    width: 4px;
+    height: 1.5rem;
+    background: linear-gradient(to bottom, #10b981, #059669);
+    border-radius: 2px;
+  }
+
+  /* Definition Terms - Cards Layout */
+  .glossary-content p {
+    background: white;
+    border-radius: 1rem;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+    border: 1px solid #f1f5f9;
+    transition: all 0.2s ease;
+    line-height: 1.7;
+  }
+
+  .glossary-content p:hover {
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    border-color: #e2e8f0;
+    transform: translateY(-1px);
+  }
+
+  /* Style the term (bold text) */
+  .glossary-content p strong {
+    display: inline-block;
+    color: #059669;
+    font-weight: 700;
+    font-size: 1.05rem;
+  }
+
+  /* Remove the leading dash and style it better */
+  .glossary-content p strong::before {
+    content: none;
+  }
+
+  /* Add responsive grid for larger screens */
+  @media (min-width: 768px) {
+    .glossary-content {
+      display: block;
+    }
+
+    .glossary-content h3 {
+      font-size: 1.75rem;
+    }
+
+    .glossary-content h3 ~ p {
+      margin-left: 0;
+    }
+  }
+
+  /* Smooth scrolling for anchor links */
+  html {
+    scroll-behavior: smooth;
+  }
+</style>
+{{ end }}
