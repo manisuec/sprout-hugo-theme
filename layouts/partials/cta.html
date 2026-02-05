@@ -11,57 +11,7 @@
       {{ .Params.cta.subheadline }}
     </p>
     <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-      <form id="newsletter-form" class="flex flex-col sm:flex-row gap-2">
-        <input
-          id="newsletter-email"
-          type="email"
-          placeholder="Enter your email..."
-          required
-          class="bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-sm text-white placeholder-primary-200 focus:ring-2 focus:ring-white/50 outline-none"
-        />
-        <button type="submit" id="newsletter-btn" class="inline-flex items-center justify-center gap-2 font-semibold rounded-xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 bg-primary-600 text-white hover:bg-primary-700 shadow-lg shadow-primary-600/20 hover:shadow-primary-600/40 focus:ring-primary-500 px-10 py-3 text-md whitespace-nowrap">
-          Subscribe
-        </button>
-      </form>
+      {{ partial "newsletter-form.html" (dict "Site" .Site "formId" "cta-newsletter") }}
     </div>
-    <p id="newsletter-msg" class="text-sm mt-3 hidden"></p>
-    <script>
-      document.getElementById('newsletter-form').addEventListener('submit', async function(e) {
-        e.preventDefault();
-        const email = document.getElementById('newsletter-email').value;
-        const btn = document.getElementById('newsletter-btn');
-        const msg = document.getElementById('newsletter-msg');
-        btn.disabled = true;
-        btn.textContent = 'Subscribing...';
-        msg.classList.add('hidden');
-        try {
-          const res = await fetch('https://connect.mailerlite.com/api/subscribers', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': 'Bearer {{ .Site.Params.mailerlite.apiKey }}'
-            },
-            body: JSON.stringify({
-              email: email,
-              groups: ['{{ .Site.Params.mailerlite.groupId }}']
-            })
-          });
-          if (res.ok || res.status === 200 || res.status === 201) {
-            msg.textContent = 'Thanks for subscribing!';
-            msg.className = 'text-sm mt-3 text-green-400 text-center';
-            document.getElementById('newsletter-email').value = '';
-          } else {
-            const data = await res.json();
-            msg.textContent = data.message || 'Something went wrong. Please try again.';
-            msg.className = 'text-sm mt-3 text-red-400 text-center';
-          }
-        } catch (err) {
-          msg.textContent = 'Network error. Please try again.';
-          msg.className = 'text-sm mt-3 text-red-400 text-center';
-        }
-        btn.disabled = false;
-        btn.textContent = 'Subscribe';
-      });
-    </script>
   </div>
 </section>
