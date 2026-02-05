@@ -29,6 +29,20 @@
 
   <!-- Schema.org Structured Data -->
   {{ partial "schema/organization.html" . }}
+
+  <!-- Google Analytics with improved loading -->
+  {{ if .Site.Params.gtagManager }}
+  <script async src="https://www.googletagmanager.com/gtag/js?id={{ .Site.Params.gtagManager }}"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', "{{ .Site.Params.gtagManager }}", {
+      'anonymize_ip': true,
+      'cookie_flags': 'SameSite=None;Secure'
+    });
+  </script>
+  {{ end }}
 </head>
 <body class="bg-slate-50 text-slate-900 antialiased selection:bg-primary-200 selection:text-primary-900">
   {{ partial "navbar.html" . }}
