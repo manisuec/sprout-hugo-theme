@@ -40,7 +40,7 @@ At Parenting Quotient, we believe that every parent deserves access to reliable,
 
 What began as a small blog sharing parenting tips has grown into a thriving community of over 50,000 families. Our founder, Dr. Sarah Mitchell, started Parenting Quotient after seeing too many parents overwhelmed by conflicting advice and unrealistic expectations.
 
-> "I wanted to create a space where parents could find trustworthy information without the judgment. Parenting is hard enough without feeling like you're doing it wrong."
+> I wanted to create a space where parents could find trustworthy information without the judgment. Parenting is hard enough without feeling like you're doing it wrong.
 > — Dr. Sarah Mitchell
 
 ## What We Offer
