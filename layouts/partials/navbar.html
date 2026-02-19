@@ -20,7 +20,7 @@
       <!-- Logo -->
       <a href="{{ .Site.BaseURL }}" class="flex items-center gap-2 group">
         <div class="w-10 h-10 bg-gradient-to-br from-primary-500 to-primary-700 rounded-lg flex items-center justify-center shadow-lg shadow-primary-500/20 group-hover:scale-110 transition-transform duration-300">
-          <img src="{{ .Site.Params.logo }}" alt="Logo" class="w-10 h-10" width="40" height="40">
+          <img src="{{ .Site.Params.logo }}" alt="Logo" class="w-10 h-10 object-cover rounded-lg" width="40" height="40">
         </div>
         <span class="text-xl font-bold tracking-tight" :class="isScrolled ? 'text-slate-900' : 'text-slate-800'">
           {{ index (split .Site.Title " ") 0 }}<span class="text-primary-600">{{ index (split .Site.Title " ") 1 }}</span>
