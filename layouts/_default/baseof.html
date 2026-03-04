@@ -6,9 +6,9 @@
   <title>
     {{ if .IsHome }}
       {{ .Site.Title }} - Articles & Expert Insights
-    {{ else if .Site.Taxonomies.categories }}
+    {{ else if and (eq .Kind "taxonomy") (eq .Data.Plural "categories")  }}
       {{ .Title }} Guides, Articles & Expert Insights
-    {{ else if .Site.Taxonomies.tags }}
+    {{ else if and (eq .Kind "taxonomy") (eq .Data.Plural "tags") }}
       {{ .Title }} Guides, Articles & Expert Insights
     {{ else }}
       {{ .Title }}{{ end }}</title>
