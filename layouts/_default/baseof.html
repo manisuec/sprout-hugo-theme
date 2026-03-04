@@ -3,8 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{{ if .IsHome }}{{ .Site.Title }} - {{ .Site.Params.description }}{{ else }}{{ .Title }}{{ end }}</title>
+  <title>
+    {{ if .IsHome }}
+      {{ .Site.Title }} - Articles & Expert Insights
+    {{ else if .Site.Taxonomies.categories }}
+      {{ .Title }} Guides, Articles & Expert Insights
+    {{ else if .Site.Taxonomies.tags }}
+      {{ .Title }} Guides, Articles & Expert Insights
+    {{ else }}
+      {{ .Title }}{{ end }}</title>
   <meta name="description" content="{{ with .Params.description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}" />
+  <link rel="canonical" href="{{ .Permalink }}">
 
   <!-- Favicon with multiple formats -->
   <link rel="icon" type="image/x-icon" href="{{ "/images/favicon.ico" | absURL }}">
