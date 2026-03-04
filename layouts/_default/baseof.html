@@ -6,8 +6,10 @@
   <title>
     {{ if .IsHome }}
       {{ .Site.Title }} - Articles & Expert Insights
-    {{ else if and (eq .Kind "taxonomy") (eq .Data.Plural "categories")  }}
+    {{ else if and (eq .Kind "term") (eq .Data.Plural "categories") }}
       {{ .Title }} Guides, Articles & Expert Insights
+    {{ else if and (eq .Kind "taxonomy") (eq .Data.Plural "categories")  }}
+      Guides, Articles & Expert Insights | {{ .Site.Title }}
     {{ else if and (eq .Kind "taxonomy") (eq .Data.Plural "tags") }}
       {{ .Title }} Guides, Articles & Expert Insights
     {{ else }}
