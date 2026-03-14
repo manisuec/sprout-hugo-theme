@@ -35,6 +35,14 @@
   <!-- Open Graph & Twitter Card Meta Tags -->
   {{ partial "opengraph.html" . }}
 
+  <!-- Schema.org Article Structured Data -->
+  {{ if .IsHome }}
+  {{ partial "schema/organization.html" . }}
+  {{ else if eq .Kind "page" }}
+  {{ partial "schema/article.html" . }}
+  {{ partial "schema/breadcrumb.html" . }}
+  {{ end }}
+
   <!-- Fonts - Only essential weights -->
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 
