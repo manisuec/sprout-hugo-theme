@@ -25,6 +25,7 @@
   {{ with .Site.Params.faviconSVG }}<link rel="icon" type="image/svg+xml" href="{{ . }}">{{ end }}
   {{ with .Site.Params.webmanifest }}<link rel="manifest" href="{{ . }}">{{ end }}
   <meta name="theme-color" content="{{ .Site.Params.themeColor | default "#10b981" }}">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
 
   <!-- Resource Hints for Performance -->
   <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
@@ -55,9 +56,6 @@
     {{ $css := $scss | toCSS | minify }}
     <style>{{ $css.Content | safeCSS }}</style>
   {{ end }}
-
-  <!-- Schema.org Structured Data -->
-  {{ partial "schema/organization.html" . }}
 
   <!-- Google Analytics with improved loading -->
   {{ if .Site.Params.gtagManager }}
