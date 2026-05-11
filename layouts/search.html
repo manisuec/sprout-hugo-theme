@@ -1,0 +1,247 @@
+<!-- Search Modal: Alpine.js + Fuse.js (lazy-loaded on first open) -->
+<div
+  x-data="pqSearch()"
+  x-cloak
+  @open-search.window="open()"
+  @keydown.window.escape="isOpen && close()"
+  @keydown.window.meta.k.prevent="toggle()"
+  @keydown.window.ctrl.k.prevent="toggle()"
+>
+  <!-- Backdrop + Modal -->
+  <div
+    x-show="isOpen"
+    x-transition.opacity
+    class="fixed inset-0 z-[60] bg-slate-900/60 backdrop-blur-sm flex items-start justify-center pt-[10vh] px-4"
+    @click.self="close()"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Search blog posts"
+  >
+    <div
+      x-show="isOpen"
+      x-transition:enter="transition ease-out duration-200"
+      x-transition:enter-start="opacity-0 -translate-y-4"
+      x-transition:enter-end="opacity-100 translate-y-0"
+      class="w-full max-w-2xl bg-white rounded-2xl shadow-2xl overflow-hidden"
+      @click.stop
+    >
+      <!-- Search Input -->
+      <div class="flex items-center gap-3 px-5 py-4 border-b border-slate-100">
+        <svg class="w-5 h-5 text-slate-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16z" />
+        </svg>
+        <input
+          x-ref="searchInput"
+          x-model="query"
+          @input.debounce.120ms="runSearch()"
+          @keydown.arrow-down.prevent="moveDown()"
+          @keydown.arrow-up.prevent="moveUp()"
+          @keydown.enter.prevent="openSelected()"
+          type="text"
+          placeholder="Search articles, topics, tags..."
+          class="flex-1 bg-transparent outline-none text-slate-900 placeholder-slate-400 text-base"
+          autocomplete="off"
+          spellcheck="false"
+        />
+        <kbd class="hidden sm:inline-flex items-center px-2 py-0.5 text-xs font-medium text-slate-500 bg-slate-100 rounded border border-slate-200">esc</kbd>
+        <button @click="close()" class="sm:hidden p-1 text-slate-400 hover:text-slate-600" aria-label="Close search">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Results / States -->
+      <div class="max-h-[60vh] overflow-y-auto">
+        <!-- Loading -->
+        <template x-if="loading">
+          <div class="px-5 py-10 text-center text-slate-500 text-sm">
+            <svg class="w-5 h-5 animate-spin mx-auto mb-2 text-primary-500" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+            </svg>
+            Loading search...
+          </div>
+        </template>
+
+        <!-- Empty query: recent posts -->
+        <template x-if="!loading && query.length === 0 && recent.length > 0">
+          <div class="py-2">
+            <div class="px-5 py-2 text-xs font-semibold text-slate-400 uppercase tracking-widest">Recent posts</div>
+            <template x-for="(item, idx) in recent" :key="item.url">
+              <a
+                :href="item.url"
+                :class="idx === activeIndex ? 'bg-primary-50' : 'hover:bg-slate-50'"
+                @mouseenter="activeIndex = idx"
+                class="block px-5 py-3 border-l-2"
+                :style="idx === activeIndex ? 'border-color: rgb(16 185 129)' : 'border-color: transparent'"
+              >
+                <div class="font-semibold text-slate-900 text-sm line-clamp-1" x-text="item.title"></div>
+                <div class="text-xs text-slate-500 line-clamp-1 mt-0.5" x-text="item.description || item.summary"></div>
+              </a>
+            </template>
+          </div>
+        </template>
+
+        <!-- Results -->
+        <template x-if="!loading && query.length > 0 && results.length > 0">
+          <div class="py-2">
+            <template x-for="(item, idx) in results" :key="item.url">
+              <a
+                :href="item.url"
+                :class="idx === activeIndex ? 'bg-primary-50' : 'hover:bg-slate-50'"
+                @mouseenter="activeIndex = idx"
+                class="block px-5 py-3 border-l-2"
+                :style="idx === activeIndex ? 'border-color: rgb(16 185 129)' : 'border-color: transparent'"
+              >
+                <div class="font-semibold text-slate-900 text-sm line-clamp-1" x-text="item.title"></div>
+                <div class="text-xs text-slate-500 line-clamp-2 mt-0.5" x-text="item.description || item.summary"></div>
+                <template x-if="item.categories && item.categories.length > 0">
+                  <div class="mt-1.5 flex flex-wrap gap-1">
+                    <template x-for="cat in item.categories.slice(0, 2)" :key="cat">
+                      <span class="text-[10px] font-semibold text-primary-700 bg-primary-50 px-2 py-0.5 rounded-full" x-text="cat"></span>
+                    </template>
+                  </div>
+                </template>
+              </a>
+            </template>
+          </div>
+        </template>
+
+        <!-- No results -->
+        <template x-if="!loading && query.length > 0 && results.length === 0">
+          <div class="px-5 py-10 text-center">
+            <div class="w-12 h-12 rounded-full bg-slate-100 mx-auto flex items-center justify-center mb-3">
+              <svg class="w-6 h-6 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <p class="text-sm font-medium text-slate-700">No results for "<span x-text="query"></span>"</p>
+            <p class="text-xs text-slate-500 mt-1">Try different keywords or check your spelling</p>
+          </div>
+        </template>
+      </div>
+
+      <!-- Footer hints -->
+      <div class="hidden sm:flex items-center gap-4 px-5 py-2.5 border-t border-slate-100 bg-slate-50 text-xs text-slate-500">
+        <span class="flex items-center gap-1.5">
+          <kbd class="inline-flex items-center px-1.5 py-0.5 font-medium bg-white rounded border border-slate-200">↑</kbd>
+          <kbd class="inline-flex items-center px-1.5 py-0.5 font-medium bg-white rounded border border-slate-200">↓</kbd>
+          navigate
+        </span>
+        <span class="flex items-center gap-1.5">
+          <kbd class="inline-flex items-center px-1.5 py-0.5 font-medium bg-white rounded border border-slate-200">enter</kbd>
+          open
+        </span>
+        <span class="flex items-center gap-1.5 ml-auto">powered by Fuse.js</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function pqSearch() {
+    return {
+      isOpen: false,
+      query: '',
+      results: [],
+      recent: [],
+      activeIndex: 0,
+      loading: false,
+      fuse: null,
+      indexLoaded: false,
+
+      toggle() {
+        this.isOpen ? this.close() : this.open();
+      },
+
+      async open() {
+        this.isOpen = true;
+        document.body.style.overflow = 'hidden';
+        await this.ensureIndex();
+        this.$nextTick(() => this.$refs.searchInput && this.$refs.searchInput.focus());
+      },
+
+      close() {
+        this.isOpen = false;
+        document.body.style.overflow = '';
+      },
+
+      async ensureIndex() {
+        if (this.indexLoaded) return;
+        this.loading = true;
+        try {
+          const [_, idxRes] = await Promise.all([
+            this.loadFuse(),
+            fetch('/index.json', { cache: 'force-cache' }).then(r => r.json())
+          ]);
+          this.fuse = new Fuse(idxRes, {
+            includeScore: false,
+            ignoreLocation: true,
+            threshold: 0.35,
+            minMatchCharLength: 2,
+            keys: [
+              { name: 'title', weight: 0.5 },
+              { name: 'tags', weight: 0.2 },
+              { name: 'categories', weight: 0.15 },
+              { name: 'description', weight: 0.1 },
+              { name: 'summary', weight: 0.05 }
+            ]
+          });
+          this.recent = idxRes
+            .slice()
+            .sort((a, b) => (b.date || '').localeCompare(a.date || ''))
+            .slice(0, 6);
+          this.indexLoaded = true;
+        } catch (e) {
+          console.error('Search index load failed', e);
+        } finally {
+          this.loading = false;
+        }
+      },
+
+      loadFuse() {
+        if (window.Fuse) return Promise.resolve();
+        return new Promise((resolve, reject) => {
+          const s = document.createElement('script');
+          s.src = 'https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js';
+          s.async = true;
+          s.onload = resolve;
+          s.onerror = reject;
+          document.head.appendChild(s);
+        });
+      },
+
+      runSearch() {
+        this.activeIndex = 0;
+        if (!this.fuse || this.query.trim().length === 0) {
+          this.results = [];
+          return;
+        }
+        this.results = this.fuse.search(this.query.trim(), { limit: 10 }).map(r => r.item);
+      },
+
+      currentList() {
+        return this.query.length > 0 ? this.results : this.recent;
+      },
+
+      moveDown() {
+        const list = this.currentList();
+        if (list.length === 0) return;
+        this.activeIndex = (this.activeIndex + 1) % list.length;
+      },
+
+      moveUp() {
+        const list = this.currentList();
+        if (list.length === 0) return;
+        this.activeIndex = (this.activeIndex - 1 + list.length) % list.length;
+      },
+
+      openSelected() {
+        const list = this.currentList();
+        const item = list[this.activeIndex];
+        if (item && item.url) window.location.href = item.url;
+      }
+    };
+  }
+</script>
