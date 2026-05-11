@@ -28,7 +28,7 @@
       </a>
 
       <!-- Desktop Nav -->
-      <div class="hidden md:flex items-center gap-8">
+      <div class="hidden md:flex items-center gap-6">
         <ul class="flex gap-8">
           {{ range .Site.Menus.main }}
             <li>
@@ -38,21 +38,46 @@
             </li>
           {{ end }}
         </ul>
+        <!-- Search trigger -->
+        <button
+          type="button"
+          @click="$dispatch('open-search')"
+          class="flex items-center gap-2 px-3 py-1.5 text-sm text-slate-500 bg-slate-100/80 hover:bg-slate-200/80 rounded-lg transition-colors"
+          aria-label="Search posts"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16z" />
+          </svg>
+          <span>Search</span>
+          <kbd class="inline-flex items-center px-1.5 py-0.5 text-[10px] font-medium text-slate-500 bg-white rounded border border-slate-200">⌘K</kbd>
+        </button>
       </div>
 
-      <!-- Mobile Menu Button -->
-      <button
-        class="md:hidden p-2 text-slate-600 hover:text-primary-600"
-        @click="isOpen = !isOpen"
-        aria-label="Toggle menu"
-      >
-        <svg x-show="!isOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-        </svg>
-        <svg x-show="isOpen" x-cloak class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-        </svg>
-      </button>
+      <!-- Mobile right side: search icon + menu -->
+      <div class="flex items-center gap-2 md:hidden">
+        <button
+          type="button"
+          @click="$dispatch('open-search')"
+          class="p-2 text-slate-600 hover:text-primary-600"
+          aria-label="Search posts"
+        >
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16z" />
+          </svg>
+        </button>
+        <button
+          class="p-2 text-slate-600 hover:text-primary-600"
+          @click="isOpen = !isOpen"
+          aria-label="Toggle menu"
+        >
+          <svg x-show="!isOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+          <svg x-show="isOpen" x-cloak class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
     </div>
   </div>
 
@@ -84,3 +109,6 @@
 
 <!-- Alpine.js for interactivity -->
 <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+<!-- Search modal -->
+{{ partial "search.html" . }}
