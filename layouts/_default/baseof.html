@@ -14,7 +14,25 @@
       {{ .Title }} Guides, Articles & Expert Insights
     {{ else }}
       {{ .Title }}{{ end }}</title>
-  <meta name="description" content="{{ with .Params.description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}" />
+  {{- $metaDescription := .Site.Params.description -}}
+  {{- with .Params.description -}}
+    {{- $metaDescription = . -}}
+  {{- else -}}
+    {{- if eq .Kind "term" -}}
+      {{- if eq .Data.Plural "categories" -}}
+        {{- $metaDescription = printf "%s guides, articles and expert insights from %s — practical, evidence-backed parenting advice." .Title .Site.Title -}}
+      {{- else if eq .Data.Plural "tags" -}}
+        {{- $metaDescription = printf "Articles tagged %s from %s — practical parenting tips on pregnancy, breastfeeding and child development." .Title .Site.Title -}}
+      {{- end -}}
+    {{- else if eq .Kind "taxonomy" -}}
+      {{- if eq .Data.Plural "categories" -}}
+        {{- $metaDescription = printf "Browse all parenting categories on %s — pregnancy, breastfeeding, nutrition and child development guides." .Site.Title -}}
+      {{- else if eq .Data.Plural "tags" -}}
+        {{- $metaDescription = printf "Browse all topics on %s — find parenting articles by tag across pregnancy, breastfeeding and child development." .Site.Title -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+  <meta name="description" content="{{ $metaDescription }}" />
   <link rel="canonical" href="{{ .Permalink }}">
 
   <!-- Favicon with multiple formats -->
