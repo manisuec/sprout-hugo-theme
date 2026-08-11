@@ -28,9 +28,82 @@
     <!-- Main Content -->
     {{ partial "prose-content.html" (dict "content" .Content "class" "mb-14") }}
 
+    <!-- Team Section -->
+    {{ with .Site.Data.about.members }}
+      <div class="mt-16">
+        <h2 class="text-3xl font-bold text-slate-900 text-center mb-4">Meet Our Team</h2>
+        <p class="text-slate-600 text-center max-w-2xl mx-auto mb-10">The people behind Parenting Quotient</p>
+        <div class="space-y-8">
+          {{ range . }}
+            {{ $member := . }}
+            {{/* Fall back to initials when the portrait is missing, so the card never shows a broken image */}}
+            {{ $img := .image }}
+            {{ if and $img (hasPrefix $img "/") (not (fileExists (path.Join "static" $img))) }}
+              {{ $img = "" }}
+            {{ end }}
+            {{ $words := slice }}
+            {{ range (split $member.name " ") }}
+              {{ if not (hasSuffix . ".") }}{{ $words = $words | append . }}{{ end }}
+            {{ end }}
+            <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-100 hover:shadow-lg transition-shadow">
+              <div class="flex flex-col sm:flex-row sm:items-start gap-6">
+
+                <!-- Portrait -->
+                <div class="shrink-0">
+                  <div class="w-28 h-28 sm:w-32 sm:h-32 rounded-full overflow-hidden ring-4 ring-primary-100 bg-primary-50 flex items-center justify-center">
+                    {{ with $img }}
+                      <img src="{{ . }}" alt="{{ $member.name }}" width="128" height="128" loading="lazy" decoding="async" class="w-full h-full object-cover" />
+                    {{ else }}
+                      <span class="text-3xl font-bold text-primary-600">
+                        {{- range first 2 $words }}{{ substr . 0 1 }}{{ end -}}
+                      </span>
+                    {{ end }}
+                  </div>
+                </div>
+
+                <!-- Details -->
+                <div class="flex-1 min-w-0">
+                  <div class="flex flex-wrap items-center gap-x-3 gap-y-2 mb-1">
+                    <h3 class="text-xl font-bold text-slate-900">{{ .name }}</h3>
+                    {{ with .credentials }}
+                      <span class="text-xs font-semibold tracking-wide uppercase text-primary-700 bg-primary-50 rounded-full px-3 py-1">{{ . }}</span>
+                    {{ end }}
+                  </div>
+
+                  <p class="text-primary-600 font-medium text-sm mb-3">{{ .role }}</p>
+
+                  {{ with .tagline }}
+                    {{/* Negative margin puts the accent rule in the card gutter so the text stays flush with the name, role and bio */}}
+                    <p class="text-slate-500 italic text-sm border-l-2 border-primary-200 -ml-3 pl-3 mb-3">{{ . }}</p>
+                  {{ end }}
+
+                  <p class="text-slate-600 text-sm leading-relaxed">{{ .bio }}</p>
+
+                  {{ with .tags }}
+                    <div class="flex flex-wrap gap-2 mt-4">
+                      {{ range . }}
+                        <span class="text-xs text-slate-600 bg-slate-100 rounded-full px-3 py-1">{{ . }}</span>
+                      {{ end }}
+                    </div>
+                  {{ end }}
+
+                  {{ with .linkedin }}
+                    <a href="{{ . }}" target="_blank" rel="noopener noreferrer" aria-label="{{ $member.name }} on LinkedIn" class="inline-flex items-center gap-2 mt-4 text-sm font-medium text-primary-600 hover:text-primary-700">
+                      {{ partial "icons/linkedin.html" }}
+                      <span>LinkedIn</span>
+                    </a>
+                  {{ end }}
+                </div>
+              </div>
+            </div>
+          {{ end }}
+        </div>
+      </div>
+    {{ end }}
+
     <!-- Values Section -->
     {{ with .Params.values }}
-      <div class="mt-12">
+      <div class="mt-16">
         <h2 class="text-3xl font-bold text-slate-900 text-center mb-8">{{ .headline }}</h2>
         <div class="grid md:grid-cols-2 gap-6">
           {{ range .items }}
