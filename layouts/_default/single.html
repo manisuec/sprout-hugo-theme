@@ -204,6 +204,15 @@
           </div>
         </div>
 
+        <!-- Subscribe modal (mounted once per page) -->
+        {{ partial "subscribe.html" . }}
+
+        <!-- Subscribe CTA (opens the modal above) -->
+        {{ partial "subscribe-inline.html" (dict
+          "heading" "Never miss a post"
+          "text" "Get evidence-based parenting articles like this one straight to your inbox. No spam, unsubscribe anytime."
+          "btnText" "Subscribe") }}
+
         <!-- Previous/Next Navigation -->
         {{ if or .PrevInSection .NextInSection }}
           <nav class="mt-12 pt-8 border-t border-slate-200" aria-label="Article navigation">
