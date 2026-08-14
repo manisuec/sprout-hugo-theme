@@ -1,0 +1,31 @@
+{{- /* Inline subscribe prompt — opens the subscribe modal (partials/subscribe.html).
+       Requires subscribe.html to be mounted once on the page. */ -}}
+{{- $heading := .heading | default "Enjoying this read?" -}}
+{{- $text := .text | default "Get evidence-based parenting articles like this one straight to your inbox. No spam, unsubscribe anytime." -}}
+{{- $btnText := .btnText | default "Subscribe" -}}
+
+<aside class="not-prose my-12 rounded-2xl border border-primary-100 bg-gradient-to-r from-primary-50 via-primary-50/60 to-white p-6 sm:p-7 shadow-sm">
+  <div class="flex flex-col sm:flex-row sm:items-center gap-5">
+    <div class="flex-1 min-w-0 flex items-start gap-4">
+      <div class="w-12 h-12 flex-shrink-0 rounded-2xl bg-primary-600 text-white flex items-center justify-center shadow-lg shadow-primary-600/20">
+        <svg class="w-6 h-6 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+        </svg>
+      </div>
+      <div class="min-w-0">
+        <p class="text-lg font-bold text-slate-900 leading-snug">{{ $heading }}</p>
+        <p class="mt-1.5 text-sm text-slate-600 leading-relaxed">{{ $text }}</p>
+      </div>
+    </div>
+    <button
+      type="button"
+      onclick="window.dispatchEvent(new CustomEvent('open-subscribe'))"
+      class="w-full sm:w-auto flex-shrink-0 inline-flex items-center justify-center gap-2 font-semibold rounded-xl bg-primary-600 text-white hover:bg-primary-700 shadow-lg shadow-primary-600/20 hover:shadow-primary-600/40 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 px-6 py-3 text-base transition-all duration-200"
+    >
+      {{ $btnText }}
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+      </svg>
+    </button>
+  </div>
+</aside>
