@@ -98,6 +98,22 @@
           </a>
         </div>
       </div>
+
+      <!-- Medical Reviewer (front matter: reviewer.name, reviewer.credentials, reviewer.date) -->
+      {{ with .Params.reviewer }}
+        {{ with .name }}
+          <p class="mt-4 flex flex-wrap items-center gap-1.5 text-sm text-slate-600">
+            <svg class="w-4 h-4 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span>Medically reviewed by <span class="font-semibold text-slate-900">{{ . }}</span>{{ with $.Params.reviewer.credentials }}, {{ . }}{{ end }}</span>
+            {{ with $.Params.reviewer.date }}
+              <span class="text-slate-300" aria-hidden="true">•</span>
+              <time datetime="{{ time.Format "2006-01-02" . }}">{{ time.Format "January 2, 2006" . }}</time>
+            {{ end }}
+          </p>
+        {{ end }}
+      {{ end }}
     </div>
   </header>
 

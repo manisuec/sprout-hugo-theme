@@ -13,6 +13,18 @@
   "mainEntityOfPage": {
     "@type": "WebPage",
     "@id": "{{ .Permalink }}"
+    {{- with .Params.reviewer }}{{ with .name }},
+    "reviewedBy": {
+      "@type": "Person",
+      "name": "{{ . }}"
+      {{- with $.Params.reviewer.credentials }},
+      "honorificSuffix": "{{ . }}"
+      {{- end }}
+    }
+    {{- with $.Params.reviewer.date }},
+    "lastReviewed": "{{ time.Format "2006-01-02" . }}"
+    {{- end }}
+    {{- end }}{{ end }}
   },
   "headline": "{{ .Title }}",
   {{- with .Params.description }}
