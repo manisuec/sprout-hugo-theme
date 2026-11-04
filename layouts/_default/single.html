@@ -57,7 +57,7 @@
       <!-- Author & Date -->
       <div class="flex flex-wrap items-center gap-4">
         {{ with .Params.author }}
-          <div class="flex items-center gap-3">
+          <a href="{{ partial "team-link.html" .name }}" rel="author" class="group flex items-center gap-3">
             {{ with .avatar }}
               <img src="{{ . }}" alt="{{ $.Params.author.name }}" class="w-12 h-12 rounded-full object-cover ring-2 ring-white shadow-lg" width="48" height="48" loading="eager" />
             {{ else }}
@@ -66,12 +66,12 @@
               </div>
             {{ end }}
             <div>
-              <p class="font-semibold text-slate-900">{{ .name }}</p>
+              <p class="font-semibold text-slate-900 group-hover:text-primary-700 group-hover:underline underline-offset-2 transition-colors">{{ .name }}</p>
               {{ with .role }}
                 <p class="text-sm text-slate-500">{{ . }}</p>
               {{ end }}
             </div>
-          </div>
+          </a>
         {{ end }}
         <span class="hidden sm:block text-slate-300">•</span>
         <time datetime="{{ .Date.Format "2006-01-02" }}" class="flex items-center gap-1.5 text-sm text-slate-500">
@@ -106,7 +106,7 @@
             <svg class="w-4 h-4 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            <span>Medically reviewed by <span class="font-semibold text-slate-900">{{ . }}</span>{{ with $.Params.reviewer.credentials }}, {{ . }}{{ end }}</span>
+            <span>Medically reviewed by <a href="{{ partial "team-link.html" . }}" class="font-semibold text-slate-900 hover:text-primary-700 hover:underline underline-offset-2 transition-colors">{{ . }}</a>{{ with $.Params.reviewer.credentials }}, {{ . }}{{ end }}</span>
             {{ with $.Params.reviewer.date }}
               <span class="text-slate-300" aria-hidden="true">•</span>
               <time datetime="{{ time.Format "2006-01-02" . }}">{{ time.Format "January 2, 2006" . }}</time>

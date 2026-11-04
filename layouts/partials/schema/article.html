@@ -16,7 +16,8 @@
     {{- with .Params.reviewer }}{{ with .name }},
     "reviewedBy": {
       "@type": "Person",
-      "name": "{{ . }}"
+      "name": "{{ . }}",
+      "url": "{{ partial "team-link.html" . | absURL }}"
       {{- with $.Params.reviewer.credentials }},
       "honorificSuffix": "{{ . }}"
       {{- end }}
@@ -41,7 +42,8 @@
   {{- with .Params.author }}
   "author": {
     "@type": "Person",
-    "name": "{{ .name }}"
+    "name": "{{ .name }}",
+    "url": "{{ partial "team-link.html" .name | absURL }}"
     {{- with .avatar }},
     "image": "{{ . | absURL }}"
     {{- end }}

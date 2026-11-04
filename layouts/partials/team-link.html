@@ -1,0 +1,19 @@
+{{/*
+  Returns the About-page URL for a person, for author/reviewer bylines.
+  Context: the person's name (string).
+  Links to that member's card when the name matches an entry in data/about.yml
+  (anchor = anchorize name), otherwise to the "Meet Our Team" section.
+  Matching ignores case, dots and parenthesised credentials, so
+  "Dr Sona Deshmukh (MBBS, MPH)" matches "Dr. Sona Deshmukh".
+*/}}
+{{- $base := "/about/" -}}
+{{- with site.GetPage "/about" }}{{ $base = .RelPermalink }}{{ end -}}
+{{- $anchor := "team" -}}
+{{- $norm := `\([^)]*\)|\.` -}}
+{{- $name := replaceRE $norm "" . | lower | strings.TrimSpace -}}
+{{- range site.Data.about.members -}}
+  {{- if eq (replaceRE $norm "" .name | lower | strings.TrimSpace) $name -}}
+    {{- $anchor = anchorize .name -}}
+  {{- end -}}
+{{- end -}}
+{{- return printf "%s#%s" $base $anchor -}}
