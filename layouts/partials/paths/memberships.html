@@ -1,0 +1,21 @@
+{{- /*
+  Find the reading paths a post belongs to.
+  Returns a slice of dicts: path, posts (resolved), pos (1-based), total, next (page or nil).
+
+  Usage: {{ $memberships := partial "paths/memberships.html" . }}
+*/ -}}
+{{- $result := slice -}}
+{{- $current := . -}}
+{{- with site.GetPage "/paths" -}}
+  {{- range .Pages.ByWeight -}}
+    {{- $path := . -}}
+    {{- $posts := partialCached "paths/resolve.html" $path $path.RelPermalink -}}
+    {{- range $i, $p := $posts -}}
+      {{- if eq $p $current -}}
+        {{- $next := cond (lt (add $i 1) (len $posts)) (index $posts (add $i 1)) nil -}}
+        {{- $result = $result | append (dict "path" $path "posts" $posts "pos" (add $i 1) "total" (len $posts) "next" $next) -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- return $result -}}

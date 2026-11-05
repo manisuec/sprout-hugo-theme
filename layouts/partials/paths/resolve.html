@@ -1,0 +1,16 @@
+{{- /*
+  Resolve a reading path's `posts` front matter (filenames in content/posts/,
+  in reading order) to pages. Posts that are missing or not built yet
+  (future-dated) are skipped with a build warning instead of failing the build.
+
+  Usage: {{ $posts := partialCached "paths/resolve.html" $path $path.RelPermalink }}
+*/ -}}
+{{- $pages := slice -}}
+{{- range .Params.posts -}}
+  {{- with site.GetPage (printf "/posts/%s" .) -}}
+    {{- $pages = $pages | append . -}}
+  {{- else -}}
+    {{- warnf "Reading path %q: post %q not found (typo, or not published yet?)" $.File.Path . -}}
+  {{- end -}}
+{{- end -}}
+{{- return $pages -}}

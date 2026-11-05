@@ -1,5 +1,12 @@
 {{ define "main" }}
-  {{ partial "hero.html" . }}
+  {{- /* Hero, facts strip and reading paths share one background: the hero
+         gradient and its glows run into the content below, and that content
+         starts above the fold, so the page reads as "keep scrolling". */}}
+  <div class="relative overflow-hidden bg-surface">
+    {{ partial "hero.html" . }}
+    {{ partial "home-stats.html" . }}
+    {{ partial "paths/home-section.html" . }}
+  </div>
   {{ partial "resources.html" . }}
   {{ partial "features.html" . }}
   {{ partial "cta.html" . }}

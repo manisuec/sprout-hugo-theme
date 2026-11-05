@@ -1,0 +1,29 @@
+{{ define "main" }}
+{{- $paths := .Pages.ByWeight -}}
+{{- $total := 0 -}}
+{{- range $paths }}{{ $total = add $total (len (partialCached "paths/resolve.html" . .RelPermalink)) }}{{ end -}}
+<section class="pt-20 pb-16 min-h-screen">
+  <header class="bg-gradient-to-b from-slate-50 via-primary-50/30 to-surface pb-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
+      <div class="max-w-3xl">
+        <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary-100 text-primary-800 text-sm font-semibold mb-6 border border-primary-200">
+          {{ partial "paths/icon.html" (dict "class" "w-4 h-4") }}
+          {{ len $paths }} reading paths · {{ $total }} articles
+        </span>
+        <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900 leading-tight mb-6">{{ .Title }}</h1>
+        <p class="text-xl text-slate-600 leading-relaxed">{{ .Description }}</p>
+        <p class="mt-3 text-slate-500">Pick the one that matches where you are. Each path starts with the basics and builds from there.</p>
+      </div>
+    </div>
+  </header>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {{ range $i, $p := $paths }}
+        {{ partial "paths/card.html" (dict "path" $p "num" (add $i 1) "preview" true) }}
+      {{ end }}
+    </div>
+  </div>
+</section>
+{{ partial "paths/progress-script.html" . }}
+{{ end }}

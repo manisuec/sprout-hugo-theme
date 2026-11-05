@@ -1,5 +1,5 @@
 {{ define "main" }}
-<section class="pt-20 pb-16 min-h-screen bg-gradient-to-b from-primary-50/30 via-white to-slate-50/50">
+<section class="pt-20 pb-16 min-h-screen bg-gradient-to-b from-primary-50/30 via-surface to-slate-50/50">
   <!-- Header Section -->
   <header class="relative overflow-hidden pb-12">
     <!-- Decorative Background Elements -->
@@ -49,11 +49,11 @@
     gap: 0.75rem;
     font-size: 1.5rem;
     font-weight: 700;
-    color: #1e293b;
+    color: var(--c-slate-800);
     margin-top: 3rem;
     margin-bottom: 1.5rem;
     padding-bottom: 0.75rem;
-    border-bottom: 2px solid #e2e8f0;
+    border-bottom: 2px solid var(--c-slate-200);
   }
 
   .glossary-content h3::before {
@@ -67,26 +67,26 @@
 
   /* Definition Terms - Cards Layout */
   .glossary-content p {
-    background: white;
+    background: var(--c-surface);
     border-radius: 1rem;
     padding: 1.25rem 1.5rem;
     margin-bottom: 1rem;
     box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-    border: 1px solid #f1f5f9;
+    border: 1px solid var(--c-slate-100);
     transition: all 0.2s ease;
     line-height: 1.7;
   }
 
   .glossary-content p:hover {
     box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-    border-color: #e2e8f0;
+    border-color: var(--c-slate-200);
     transform: translateY(-1px);
   }
 
   /* Style the term (bold text) */
   .glossary-content p strong {
     display: inline-block;
-    color: #1C48A8;
+    color: var(--c-link);
     font-weight: 700;
     font-size: 1.05rem;
   }

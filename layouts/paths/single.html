@@ -1,0 +1,126 @@
+{{ define "main" }}
+{{- $posts := partialCached "paths/resolve.html" . .RelPermalink -}}
+{{- $minutes := 0 -}}
+{{- range $posts }}{{ $minutes = add $minutes .ReadingTime }}{{ end -}}
+{{- $all := (site.GetPage "/paths").Pages.ByWeight -}}
+{{- $num := 0 -}}
+{{- range $i, $p := $all }}{{ if eq $p $ }}{{ $num = add $i 1 }}{{ end }}{{ end -}}
+
+<article class="pt-20 pb-16">
+  <header class="bg-gradient-to-b from-slate-50 via-primary-50/30 to-surface pb-10">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
+      <a href="/paths/" class="inline-flex items-center gap-1.5 text-sm font-medium text-slate-500 hover:text-primary-600 transition-colors mb-6">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg>
+        Reading paths
+      </a>
+
+      <div class="flex flex-wrap items-center gap-3 mb-5">
+        <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary-100 text-primary-800 text-sm font-semibold border border-primary-200">
+          {{ partial "paths/icon.html" (dict "class" "w-4 h-4") }}
+          Path {{ printf "%02d" $num }}
+        </span>
+        {{ with .Params.audience }}<span class="text-sm font-medium text-slate-500">{{ . }}</span>{{ end }}
+      </div>
+
+      <h1 class="text-3xl md:text-5xl font-extrabold text-slate-900 leading-tight mb-4">{{ .Title }}</h1>
+      <p class="text-lg md:text-xl text-slate-600 leading-relaxed mb-4">{{ .Description }}</p>
+      <p class="text-sm font-medium text-slate-500">{{ len $posts }} articles · {{ $minutes }} min · best read in order</p>
+
+      <!-- Progress (filled in from localStorage by paths/progress-script.html) -->
+      {{ with $posts }}
+      <div class="mt-8 p-5 bg-surface rounded-2xl border border-slate-100 shadow-sm">
+        <div class="flex items-center justify-between gap-4 mb-3 text-sm">
+          <span class="font-semibold text-slate-700" data-path-count>0 of {{ len $posts }} read</span>
+          <button type="button" class="hidden font-medium text-slate-500 hover:text-primary-600 underline-offset-2 hover:underline" data-path-reset>Reset progress</button>
+        </div>
+        <div class="h-2 rounded-full bg-slate-100 overflow-hidden" role="progressbar" aria-label="Path progress" aria-valuemin="0" aria-valuemax="{{ len $posts }}" aria-valuenow="0" data-path-bar>
+          <div class="h-full w-0 rounded-full bg-gradient-to-r from-primary-500 to-primary-400 transition-[width] duration-500" data-path-bar-fill></div>
+        </div>
+        <a href="{{ (index $posts 0).RelPermalink }}" class="mt-5 inline-flex items-center gap-2 rounded-full font-semibold bg-primary-600 text-white hover:bg-primary-700 shadow-lg shadow-primary-600/20 px-6 py-3 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400" data-path-cta>
+          <span data-path-cta-label>Start with article 1</span>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+          </svg>
+        </a>
+      </div>
+      {{ end }}
+    </div>
+  </header>
+
+  <!-- Steps -->
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 mt-4">
+    <ol class="relative" data-path-list>
+      {{ range $i, $p := $posts }}
+        {{ $last := eq (add $i 1) (len $posts) }}
+        <li class="group relative flex gap-4 sm:gap-6 pb-6" data-path-post="{{ $p.File.ContentBaseName }}">
+          {{ if not $last }}
+            <span class="absolute left-5 top-12 -bottom-0 w-0.5 -translate-x-1/2 bg-slate-200 group-data-[read=true]:bg-primary-300" aria-hidden="true"></span>
+          {{ end }}
+          <span class="relative z-10 flex-shrink-0 flex items-center justify-center w-10 h-10 rounded-full border-2 border-primary-200 bg-surface text-sm font-bold text-primary-700 tabular-nums group-data-[read=true]:bg-primary-600 group-data-[read=true]:border-primary-600 group-data-[read=true]:text-white">
+            <span class="group-data-[read=true]:hidden">{{ add $i 1 }}</span>
+            <svg class="hidden group-data-[read=true]:block w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
+            </svg>
+          </span>
+          <a href="{{ $p.RelPermalink }}" class="flex-1 min-w-0 flex gap-4 p-4 sm:p-5 bg-surface rounded-2xl border border-slate-100 shadow-sm hover:shadow-md hover:border-primary-200 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400">
+            <div class="flex-1 min-w-0">
+              <h2 class="text-base sm:text-lg font-bold text-slate-900 leading-snug mb-1 group-hover:text-primary-700 transition-colors">{{ $p.Title }}</h2>
+              {{ with $p.Description }}<p class="text-sm text-slate-600 leading-relaxed line-clamp-2 mb-2">{{ . }}</p>{{ end }}
+              <p class="text-xs font-medium text-slate-500">
+                {{ $p.ReadingTime }} min read
+                <span class="hidden group-data-[read=true]:inline"> · <span class="text-primary-600">Read</span></span>
+              </p>
+            </div>
+            {{ with $p.Params.image }}
+              <img src="{{ . }}" alt="" loading="lazy" decoding="async" width="112" height="80" class="hidden sm:block flex-shrink-0 w-28 h-20 rounded-xl object-cover" />
+            {{ end }}
+          </a>
+        </li>
+      {{ end }}
+    </ol>
+
+    <p class="sr-only" aria-live="polite" data-path-live></p>
+  </div>
+
+  <!-- More paths -->
+  {{ $others := slice }}
+  {{ range $i, $p := $all }}{{ if gt (add $i 1) $num }}{{ $others = $others | append $p }}{{ end }}{{ end }}
+  {{ range $i, $p := $all }}{{ if lt (add $i 1) $num }}{{ $others = $others | append $p }}{{ end }}{{ end }}
+  {{ with first 2 $others }}
+  <section class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 print:hidden">
+    <div class="flex items-end justify-between gap-4 mb-6">
+      <h2 class="text-2xl font-bold text-slate-900">More reading paths</h2>
+      <a href="/paths/" class="text-sm font-semibold text-primary-600 hover:text-primary-700">All paths →</a>
+    </div>
+    <div class="grid gap-6 md:grid-cols-2">
+      {{ range . }}
+        {{ $n := 0 }}{{ $cur := . }}
+        {{ range $i, $p := $all }}{{ if eq $p $cur }}{{ $n = add $i 1 }}{{ end }}{{ end }}
+        {{ partial "paths/card.html" (dict "path" . "num" $n "preview" false) }}
+      {{ end }}
+    </div>
+  </section>
+  {{ end }}
+</article>
+
+<!-- Structured data: the path as an ordered list of articles -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": {{ .Title }},
+  "description": {{ .Description }},
+  "url": {{ .Permalink }},
+  "numberOfItems": {{ len $posts }},
+  "itemListOrder": "https://schema.org/ItemListOrderAscending",
+  "itemListElement": [
+    {{- range $i, $p := $posts }}{{ if $i }},{{ end }}
+    { "@type": "ListItem", "position": {{ add $i 1 }}, "url": {{ $p.Permalink }}, "name": {{ $p.Title }} }
+    {{- end }}
+  ]
+}
+</script>
+{{ partial "paths/progress-script.html" . }}
+{{ end }}

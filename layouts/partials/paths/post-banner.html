@@ -1,0 +1,12 @@
+{{- /* "Pregnancy, trimester by trimester · 3 of 9" link above a post's title. Context: memberships slice. */ -}}
+{{- with . }}
+<div class="flex flex-wrap gap-2 mb-5">
+  {{ range . }}
+    <a href="{{ .path.RelPermalink }}" class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface/80 border border-primary-200 text-sm font-medium text-slate-700 hover:border-primary-400 hover:text-primary-700 transition-colors backdrop-blur-sm">
+      {{ partial "paths/icon.html" (dict "class" "w-4 h-4 text-primary-500") }}
+      <span><span class="sr-only">Reading path: </span>{{ .path.Title }}</span>
+      <span class="text-slate-500 tabular-nums">· {{ .pos }} of {{ .total }}</span>
+    </a>
+  {{ end }}
+</div>
+{{- end }}
