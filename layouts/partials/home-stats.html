@@ -1,0 +1,41 @@
+{{- /*
+  Facts strip between the hero and the reading paths. It starts above the fold,
+  so it works as a scroll cue as well as a trust signal.
+  Every number is computed at build time, so nothing here goes stale or overclaims:
+  - doctor count = posts whose author or reviewer name starts with "Dr".
+*/ -}}
+{{- $posts := where site.RegularPages "Section" "posts" -}}
+{{- $paths := slice -}}
+{{- with site.GetPage "/paths" }}{{ $paths = .Pages }}{{ end -}}
+{{- $byDoctor := 0 -}}
+{{- range $posts -}}
+  {{- $author := (.Params.author.name | default "") | string -}}
+  {{- $reviewer := "" -}}
+  {{- with .Params.reviewer }}{{ $reviewer = (.name | default "") | string }}{{ end -}}
+  {{- if or (hasPrefix $author "Dr") (hasPrefix $reviewer "Dr") }}{{ $byDoctor = add $byDoctor 1 }}{{ end -}}
+{{- end -}}
+{{- $since := "" -}}
+{{- with $posts.ByDate }}{{ $since = (index . 0).Date.Year }}{{ end -}}
+
+{{- $items := slice
+  (dict "value" (len $posts) "label" "practical, evidence-based articles" "href" "/posts/")
+  (dict "value" (len $paths) "label" "reading paths to start with" "href" "/paths/")
+  (dict "value" $byDoctor "label" "written or reviewed by a doctor" "href" "/about/")
+  (dict "value" (printf "Since %d" $since) "label" "written by parents, for parents" "href" "/about/")
+-}}
+<section aria-label="Parenting Quotient at a glance" class="relative">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <ul role="list" class="grid grid-cols-2 lg:grid-cols-4 gap-px overflow-hidden rounded-2xl border border-slate-200 bg-slate-200 shadow-sm">
+      {{- range $items }}
+        {{- if .value }}
+      <li class="bg-surface">
+        <a href="{{ .href }}" class="group flex h-full flex-col gap-1 px-4 py-4 sm:px-6 sm:py-5 hover:bg-primary-50 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400">
+          <span class="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 group-hover:text-primary-700 transition-colors tabular-nums">{{ .value }}</span>
+          <span class="text-sm leading-snug text-slate-600">{{ .label }}</span>
+        </a>
+      </li>
+        {{- end }}
+      {{- end }}
+    </ul>
+  </div>
+</section>

@@ -1,0 +1,32 @@
+{{- /* "Next in <path> · 4 of 9" card at the end of a post. Context: memberships slice. */ -}}
+{{- range . }}
+{{- $m := . }}
+<nav class="mt-10 print:hidden" aria-label="Reading path: {{ .path.Title }}">
+  {{ with .next }}
+    <a href="{{ .RelPermalink }}" class="group flex items-center gap-4 sm:gap-6 p-5 sm:p-6 rounded-2xl border border-primary-200 bg-gradient-to-r from-primary-50 to-surface hover:border-primary-400 hover:shadow-lg transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400">
+      <div class="flex-1 min-w-0">
+        <p class="flex flex-wrap items-center gap-x-2 text-sm font-medium text-primary-700 mb-1">
+          {{ partial "paths/icon.html" (dict "class" "w-4 h-4") }}
+          Next in {{ $m.path.Title }}<span class="text-slate-500 tabular-nums">· {{ add $m.pos 1 }} of {{ $m.total }}</span>
+        </p>
+        <p class="text-lg font-bold text-slate-900 group-hover:text-primary-700 transition-colors leading-snug">{{ .Title }}</p>
+        <p class="text-sm text-slate-500 mt-1">{{ .ReadingTime }} min read</p>
+      </div>
+      <svg class="flex-shrink-0 w-6 h-6 text-primary-500 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+      </svg>
+    </a>
+  {{ else }}
+    <div class="flex flex-col sm:flex-row sm:items-center gap-4 p-5 sm:p-6 rounded-2xl border border-primary-200 bg-gradient-to-r from-primary-50 to-surface">
+      <div class="flex-1">
+        <p class="text-sm font-medium text-primary-700 mb-1">You've reached the end of {{ .path.Title }}</p>
+        <p class="text-slate-600">That's all {{ .total }} articles in this path. Pick another one when you're ready.</p>
+      </div>
+      <div class="flex gap-3">
+        <a href="{{ .path.RelPermalink }}" class="text-sm font-semibold text-primary-600 hover:text-primary-700 whitespace-nowrap">Back to the path</a>
+        <a href="/paths/" class="text-sm font-semibold text-primary-600 hover:text-primary-700 whitespace-nowrap">All paths →</a>
+      </div>
+    </div>
+  {{ end }}
+</nav>
+{{- end }}

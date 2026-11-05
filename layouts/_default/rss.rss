@@ -3,6 +3,8 @@
 {{- $pages := slice -}}
 {{- if or $.IsHome $.IsSection -}}
 {{- $pages = $pctx.RegularPages -}}
+{{- /* Reading paths are hubs, not articles: keep them out of the site feed. */ -}}
+{{- if $.IsHome }}{{ $pages = where $pages "Section" "ne" "paths" }}{{ end -}}
 {{- else -}}
 {{- $pages = $pctx.Pages -}}
 {{- end -}}

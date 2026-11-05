@@ -4,6 +4,123 @@
 
 /* Base styles */
 @layer base {
+  /*
+   * Theme tokens. Values are space-separated RGB channels so Tailwind opacity
+   * modifiers (bg-surface/90, via-primary-50/30, ...) keep working.
+   * The `dark` class on <html> is set by the inline script in baseof.html.
+   */
+  :root {
+    color-scheme: light;
+
+    --surface: 255 255 255;
+    --surface-raised: 255 255 255;
+
+    --slate-50: 248 250 252;
+    --slate-100: 241 245 249;
+    --slate-200: 226 232 240;
+    --slate-300: 203 213 225;
+    --slate-400: 148 163 184;
+    --slate-500: 100 116 139;
+    --slate-600: 71 85 105;
+    --slate-700: 51 65 85;
+    --slate-800: 30 41 59;
+    --slate-900: 15 23 42;
+
+    /* primary as background / border (light tints) */
+    --p-bg-50: 238 243 251;
+    --p-bg-100: 214 226 246;
+    --p-bg-200: 174 197 236;
+    --p-bg-300: 125 159 221;
+
+    /* primary as text (deep shades) */
+    --p-tx-400: 74 114 203;
+    --p-tx-500: 39 84 185;
+    --p-tx-600: 28 72 168;
+    --p-tx-700: 23 58 135;
+    --p-tx-800: 20 47 107;
+    --p-tx-900: 18 39 73;
+
+    --a-bg-50: 255 247 237;
+    --a-bg-100: 255 237 213;
+  }
+
+  /* Dark values apply on screen only: printing always uses the light palette
+     (browsers drop backgrounds when printing, so light-on-dark text would vanish). */
+  @media screen {
+    .dark {
+      color-scheme: dark;
+
+      --surface: 21 29 46;
+      --surface-raised: 30 41 62;
+
+      --slate-50: 10 15 28;
+      --slate-100: 38 50 70;
+      --slate-200: 55 68 90;
+      --slate-300: 71 85 105;
+      --slate-400: 120 134 154;
+      --slate-500: 148 163 184;
+      --slate-600: 178 190 205;
+      --slate-700: 203 213 225;
+      --slate-800: 226 232 240;
+      --slate-900: 241 245 249;
+
+      --p-bg-50: 23 33 58;
+      --p-bg-100: 28 42 74;
+      --p-bg-200: 36 56 102;
+      --p-bg-300: 48 75 138;
+
+      --p-tx-400: 174 197 236;
+      --p-tx-500: 125 159 221;
+      --p-tx-600: 143 176 232;
+      --p-tx-700: 174 197 236;
+      --p-tx-800: 196 213 242;
+      --p-tx-900: 214 226 246;
+
+      /* The warm accent tints turn muddy brown on dark backgrounds, so they
+         fade into the card surface / a blue tint instead. */
+      --a-bg-50: 21 29 46;
+      --a-bg-100: 28 42 74;
+    }
+  }
+
+  /* Ready-made colors for hand-written CSS (SCSS, inline <style> blocks). */
+  :root {
+    --c-surface: rgb(var(--surface));
+    --c-slate-50: rgb(var(--slate-50));
+    --c-slate-100: rgb(var(--slate-100));
+    --c-slate-200: rgb(var(--slate-200));
+    --c-slate-300: rgb(var(--slate-300));
+    --c-slate-400: rgb(var(--slate-400));
+    --c-slate-500: rgb(var(--slate-500));
+    --c-slate-700: rgb(var(--slate-700));
+    --c-slate-800: rgb(var(--slate-800));
+    --c-slate-900: rgb(var(--slate-900));
+    --c-link: rgb(var(--p-tx-600));
+    --c-link-hover: rgb(var(--p-tx-700));
+    --c-tint-50: rgb(var(--p-bg-50));
+    --c-tint-100: rgb(var(--p-bg-100));
+  }
+
+  @media screen {
+    /* Focus-ring offsets default to white; match the card surface instead. */
+    .dark *, .dark ::before, .dark ::after {
+      --tw-ring-offset-color: rgb(var(--surface));
+    }
+
+    /* Take the glare off bright photos at night. Logos live outside <main>. */
+    .dark main img {
+      filter: brightness(0.9);
+    }
+  }
+
+  /* Set for two frames while the theme changes so every element switches at
+     once, instead of the 88 transition-* elements fading at their own speed. */
+  .theme-switching *,
+  .theme-switching *::before,
+  .theme-switching *::after {
+    transition: none !important;
+  }
+
   body {
     font-family: 'Plus Jakarta Sans', sans-serif;
   }

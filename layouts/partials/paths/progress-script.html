@@ -1,0 +1,90 @@
+{{- /*
+  Reading-path progress, kept only in this browser (localStorage "pq-read":
+  a list of post filenames). Nothing is sent anywhere.
+  - Post pages: a post counts as read once [data-read-marker] (end of the article) scrolls into view.
+  - Path cards: show "n of N read" / "completed" and change the call to action.
+  - Path page: tick finished steps, fill the progress bar, point the button at the first unread article.
+  Included once per page by posts, /paths/ and the homepage section.
+*/ -}}
+<script>
+(function () {
+  var KEY = 'pq-read';
+  function load() { try { var a = JSON.parse(localStorage.getItem(KEY) || '[]'); return Array.isArray(a) ? a : []; } catch (e) { return []; } }
+  function save(a) { try { localStorage.setItem(KEY, JSON.stringify(a)); } catch (e) {} }
+  function has(a, s) { return a.indexOf(s) !== -1; }
+
+  // 1. Post page: mark as read at the end of the article.
+  var marker = document.querySelector('[data-read-marker]');
+  if (marker && 'IntersectionObserver' in window) {
+    var slug = marker.getAttribute('data-read-marker');
+    if (!has(load(), slug)) {
+      var io = new IntersectionObserver(function (entries) {
+        if (!entries.some(function (e) { return e.isIntersecting; })) return;
+        var a = load();
+        if (!has(a, slug)) { a.push(slug); save(a); }
+        io.disconnect();
+      });
+      io.observe(marker);
+    }
+  }
+
+  function render() {
+    var read = load();
+
+    // 2. Path cards (index, homepage, "more paths").
+    document.querySelectorAll('[data-path-card]').forEach(function (card) {
+      var slugs = card.getAttribute('data-path-card').split(',');
+      var n = slugs.filter(function (s) { return has(read, s); }).length;
+      var wrap = card.querySelector('[data-path-card-progress]');
+      var cta = card.querySelector('[data-path-card-cta]');
+      if (!n) { wrap.classList.add('hidden'); cta.textContent = 'Start reading'; return; }
+      wrap.classList.remove('hidden');
+      card.querySelector('[data-path-card-count]').textContent = n === slugs.length ? 'completed' : n + ' of ' + slugs.length + ' read';
+      cta.textContent = n === slugs.length ? 'Read again' : 'Continue reading';
+    });
+
+    // 3. Path page.
+    var list = document.querySelector('[data-path-list]');
+    if (!list) return;
+    var items = Array.prototype.slice.call(list.querySelectorAll('[data-path-post]'));
+    var done = 0, next = null, nextNum = 0;
+    items.forEach(function (li, i) {
+      var isRead = has(read, li.getAttribute('data-path-post'));
+      if (isRead) { li.setAttribute('data-read', 'true'); done++; }
+      else { li.removeAttribute('data-read'); if (!next) { next = li; nextNum = i + 1; } }
+    });
+    var total = items.length;
+    var pct = total ? Math.round(done / total * 100) : 0;
+    var bar = document.querySelector('[data-path-bar]');
+    if (bar) { bar.setAttribute('aria-valuenow', String(done)); bar.querySelector('[data-path-bar-fill]').style.width = pct + '%'; }
+    var count = document.querySelector('[data-path-count]');
+    if (count) count.textContent = done === total ? 'Path complete · all ' + total + ' read' : done + ' of ' + total + ' read';
+    var reset = document.querySelector('[data-path-reset]');
+    if (reset) reset.classList.toggle('hidden', done === 0);
+    var cta = document.querySelector('[data-path-cta]');
+    if (cta) {
+      var target = next || items[0];
+      cta.setAttribute('href', target.querySelector('a').getAttribute('href'));
+      cta.querySelector('[data-path-cta-label]').textContent =
+        done === 0 ? 'Start with article 1' : (next ? 'Continue with article ' + nextNum : 'Read it again from the start');
+    }
+  }
+
+  var resetBtn = document.querySelector('[data-path-reset]');
+  if (resetBtn) {
+    resetBtn.addEventListener('click', function () {
+      var slugs = Array.prototype.map.call(document.querySelectorAll('[data-path-post]'), function (li) { return li.getAttribute('data-path-post'); });
+      save(load().filter(function (s) { return slugs.indexOf(s) === -1; }));
+      render();
+      var live = document.querySelector('[data-path-live]');
+      if (live) live.textContent = 'Progress for this path has been reset.';
+    });
+  }
+
+  render();
+  // Coming back via the back button restores the page from cache: refresh the ticks.
+  window.addEventListener('pageshow', function (e) { if (e.persisted) render(); });
+  // Keep in step with other tabs.
+  window.addEventListener('storage', function (e) { if (e.key === KEY || e.key === null) render(); });
+})();
+</script>

@@ -42,7 +42,64 @@
   <link rel="apple-touch-icon" sizes="180x180" href="{{ "/images/apple-touch-icon.png" | absURL }}">
   {{ with .Site.Params.faviconSVG }}<link rel="icon" type="image/svg+xml" href="{{ . }}">{{ end }}
   {{ with .Site.Params.webmanifest }}<link rel="manifest" href="{{ . }}">{{ end }}
-  <meta name="theme-color" content="{{ .Site.Params.themeColor | default "#1C48A8" }}">
+  {{- $themeColor := .Site.Params.themeColor | default "#1C48A8" -}}
+  {{- $themeColorDark := .Site.Params.themeColorDark | default "#0a0f1c" }}
+  {{- /* Media-query pair works before/without JS; the theme script overrides both
+         when the reader picks light or dark explicitly. */}}
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="{{ $themeColor }}" data-light="{{ $themeColor }}" data-dark="{{ $themeColorDark }}" data-default="{{ $themeColor }}">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="{{ $themeColorDark }}" data-light="{{ $themeColor }}" data-dark="{{ $themeColorDark }}" data-default="{{ $themeColorDark }}">
+  <meta name="color-scheme" content="light dark">
+  <!-- Theme: apply before first paint to avoid a flash of the wrong theme.
+       Modes: "light" | "dark" (saved in localStorage) | "system" (nothing saved, follow the OS).
+       <html data-theme-mode> drives which toggle icon is shown, with no wait for Alpine. -->
+  <script>
+    (function () {
+      var root = document.documentElement;
+      var mq = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+      var NEXT = { light: 'dark', dark: 'system', system: 'light' };
+      var NAME = { light: 'light', dark: 'dark', system: 'system' };
+      function stored() {
+        try { var t = localStorage.getItem('theme'); return (t === 'light' || t === 'dark') ? t : 'system'; }
+        catch (e) { return 'system'; }
+      }
+      function label(mode) {
+        var text = 'Theme: ' + NAME[mode] + '. Switch to ' + NAME[NEXT[mode]] + ' theme';
+        document.querySelectorAll('[data-theme-toggle]').forEach(function (b) {
+          b.setAttribute('aria-label', text); b.setAttribute('title', text);
+        });
+      }
+      function apply(mode, instant) {
+        var dark = mode === 'dark' || (mode === 'system' && !!(mq && mq.matches));
+        if (instant) root.classList.add('theme-switching');
+        root.classList.toggle('dark', dark);
+        root.setAttribute('data-theme-mode', mode);
+        document.querySelectorAll('meta[name="theme-color"]').forEach(function (m) {
+          m.setAttribute('content', m.getAttribute(mode === 'system' ? 'data-default' : (dark ? 'data-dark' : 'data-light')));
+        });
+        label(mode);
+        if (instant) {
+          // Drop the no-transition guard once the new colours have been painted.
+          requestAnimationFrame(function () { requestAnimationFrame(function () { root.classList.remove('theme-switching'); }); });
+        }
+      }
+      window.__cycleTheme = function () {
+        var mode = NEXT[stored()];
+        try { mode === 'system' ? localStorage.removeItem('theme') : localStorage.setItem('theme', mode); } catch (e) {}
+        apply(mode, true);
+      };
+      apply(stored(), false);
+      document.addEventListener('DOMContentLoaded', function () { label(stored()); });
+      // Keep other open tabs in step when the theme is changed in one of them.
+      window.addEventListener('storage', function (e) {
+        if (e.key === 'theme' || e.key === null) apply(stored(), true);
+      });
+      if (mq && mq.addEventListener) {
+        mq.addEventListener('change', function () { if (stored() === 'system') apply('system', true); });
+      }
+    })();
+  </script>
+  <!-- Without JS the toggle can't work and would render as an empty button. -->
+  <noscript><style>[data-theme-toggle]{display:none!important}</style></noscript>
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
 
   <!-- Resource Hints for Performance -->
@@ -66,7 +123,12 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 
   <!-- Tailwind CSS (built at build time) -->
-  <link rel="stylesheet" href="/css/styles.css">
+  {{- /* Version the stylesheet by content hash: it is served with a multi-hour
+         browser cache, and new markup must never be paired with stale CSS. */ -}}
+  {{- $cssPath := "themes/sprout-hugo-theme/static/css/styles.css" -}}
+  {{- $cssVer := "" -}}
+  {{- if fileExists $cssPath }}{{ $cssVer = substr (readFile $cssPath | md5) 0 8 }}{{ end }}
+  <link rel="stylesheet" href="/css/styles.css{{ with $cssVer }}?v={{ . }}{{ end }}">
 
   <!-- Custom SCSS -->
   {{ $scss := resources.Get "scss/main.scss" }}

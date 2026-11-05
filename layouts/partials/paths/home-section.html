@@ -1,0 +1,30 @@
+{{- with site.GetPage "/paths" -}}
+{{- $paths := .Pages.ByWeight -}}
+{{- if $paths }}
+<section id="paths" class="pt-14 pb-16 relative scroll-mt-20">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-end gap-6 mb-8">
+      <div>
+        <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Reading paths</h2>
+        <p class="text-lg text-slate-600 max-w-xl">Not sure where to start? Follow a path: a short set of articles, in order, for the stage you're at.</p>
+      </div>
+      <a href="/paths/" class="hidden md:flex items-center gap-1 text-primary-600 font-semibold hover:text-primary-700 transition-colors whitespace-nowrap">
+        All {{ len $paths }} paths
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+        </svg>
+      </a>
+    </div>
+    <div class="grid gap-6 md:grid-cols-2">
+      {{ range $i, $p := first 4 $paths }}
+        {{ partial "paths/card.html" (dict "path" $p "num" (add $i 1) "preview" true) }}
+      {{ end }}
+    </div>
+    <div class="mt-8 text-center md:hidden">
+      <a href="/paths/" class="inline-flex items-center gap-1 text-primary-600 font-semibold">All {{ len $paths }} paths →</a>
+    </div>
+  </div>
+</section>
+{{ partial "paths/progress-script.html" . }}
+{{- end }}
+{{- end -}}

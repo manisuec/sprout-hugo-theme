@@ -4,15 +4,15 @@
 {{- $text := .text -}}
 {{- $class := .class | default "" -}}
 
-{{- $baseStyles := "inline-flex items-center justify-center rounded-full font-semibold transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed" -}}
+{{- $baseStyles := "inline-flex items-center justify-center rounded-full font-semibold transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed" -}}
 
 {{- $variantStyles := "" -}}
 {{- if eq $variant "primary" -}}
-  {{- $variantStyles = "bg-primary-600 text-white hover:bg-primary-700 shadow-lg shadow-primary-600/20 hover:shadow-primary-600/40 focus:ring-primary-500" -}}
+  {{- $variantStyles = "bg-primary-600 text-white hover:bg-primary-700 shadow-lg shadow-primary-600/20 hover:shadow-primary-600/40 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400" -}}
 {{- else if eq $variant "secondary" -}}
-  {{- $variantStyles = "bg-white text-slate-800 hover:bg-slate-50 border border-slate-200 shadow-sm hover:shadow-md focus:ring-slate-200" -}}
+  {{- $variantStyles = "bg-surface text-slate-800 hover:bg-slate-50 border border-slate-200 shadow-sm hover:shadow-md focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400" -}}
 {{- else if eq $variant "outline" -}}
-  {{- $variantStyles = "bg-transparent border-2 border-primary-600 text-primary-700 hover:bg-primary-50 focus:ring-primary-500" -}}
+  {{- $variantStyles = "bg-transparent border-2 border-primary-600 text-primary-700 hover:bg-primary-50 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400" -}}
 {{- else if eq $variant "ghost" -}}
   {{- $variantStyles = "bg-transparent text-slate-600 hover:text-primary-700 hover:bg-primary-50/50" -}}
 {{- end -}}

@@ -1,4 +1,4 @@
-<footer class="bg-slate-900 text-slate-300 py-10">
+<footer class="print:hidden bg-ink-900 dark:border-t dark:border-ink-800 text-ink-300 py-10">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-3">
       <div class="flex items-center gap-2 text-white">
@@ -8,31 +8,31 @@
         <span class="text-xl font-bold">{{ .Site.Title }}</span>
       </div>
       <div class="flex gap-4">
-        <a href="{{ .Site.Params.socials.facebook }}" class="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center hover:bg-primary-600 hover:text-white transition-all" target="_blank">
+        <a href="{{ .Site.Params.socials.facebook }}" class="w-10 h-10 bg-ink-800 rounded-full flex items-center justify-center hover:bg-primary-600 hover:text-white transition-all" target="_blank">
           {{ partial "icons/facebook.html" }}
         </a>
-        <a href="{{ .Site.Params.socials.twitter }}" class="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center hover:bg-primary-600 hover:text-white transition-all" target="_blank">
+        <a href="{{ .Site.Params.socials.twitter }}" class="w-10 h-10 bg-ink-800 rounded-full flex items-center justify-center hover:bg-primary-600 hover:text-white transition-all" target="_blank">
           {{ partial "icons/twitter.html" }}
         </a>
-        <a href="{{ .Site.Params.socials.instagram }}" class="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center hover:bg-primary-600 hover:text-white transition-all" target="_blank">
+        <a href="{{ .Site.Params.socials.instagram }}" class="w-10 h-10 bg-ink-800 rounded-full flex items-center justify-center hover:bg-primary-600 hover:text-white transition-all" target="_blank">
           {{ partial "icons/instagram.html" }}
         </a>
-        <a href="{{ .Site.Params.socials.pinterest }}" class="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center hover:bg-primary-600 hover:text-white transition-all" target="_blank">
+        <a href="{{ .Site.Params.socials.pinterest }}" class="w-10 h-10 bg-ink-800 rounded-full flex items-center justify-center hover:bg-primary-600 hover:text-white transition-all" target="_blank">
           {{ partial "icons/pinterest.html" }}
         </a>
-        <a href="{{ .Site.Params.socials.youtube }}" class="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center hover:bg-primary-600 hover:text-white transition-all" target="_blank">
+        <a href="{{ .Site.Params.socials.youtube }}" class="w-10 h-10 bg-ink-800 rounded-full flex items-center justify-center hover:bg-primary-600 hover:text-white transition-all" target="_blank">
           {{ partial "icons/youtube.html" }}
         </a>
-        <a href="/feed.xml" class="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center hover:bg-primary-600 hover:text-white transition-all" target="_blank" title="RSS Feed">
+        <a href="/feed.xml" class="w-10 h-10 bg-ink-800 rounded-full flex items-center justify-center hover:bg-primary-600 hover:text-white transition-all" target="_blank" title="RSS Feed">
           {{ partial "icons/rss.html" }}
         </a>
       </div>
       <div>
-        <a href="/privacy/" class="ml-4 text-sm text-slate-400 hover:text-primary-600 transition-colors">Privacy Policy</a>
+        <a href="/privacy/" class="ml-4 text-sm text-ink-400 hover:text-primary-400 transition-colors">Privacy Policy</a>
       </div>
     </div>
 
-    <div class="border-t border-slate-800 pt-3 flex flex-col md:flex-row justify-between items-center text-sm text-slate-500">
+    <div class="border-t border-ink-800 pt-3 flex flex-col md:flex-row justify-between items-center text-sm text-ink-500">
       <p>&copy; {{ now.Year }} {{ .Site.Title }}. All rights reserved.</p>
     </div>
   </div>
